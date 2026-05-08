@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Urbania — La città che parla</title>
+<link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue: #0071e3;
+    --blue-light: #e8f1fc;
+    --gray-50: #f5f5f7;
+    --gray-100: #e8e8ed;
+    --gray-400: #86868b;
+    --gray-700: #1d1d1f;
+    --green: #30d158;
+    --orange: #ff9f0a;
+    --red: #ff453a;
+    --white: #ffffff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+    background: #fff;
+    color: var(--gray-700);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 0.5px solid var(--gray-100);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+    height: 52px;
+  }
+
+  .nav-logo {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    color: var(--gray-700);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    color: var(--gray-700);
+    text-decoration: none;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+  }
+
+  .nav-links a:hover { opacity: 1; }
+
+  .nav-cta {
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    border-radius: 980px;
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .nav-cta:hover { background: #0077ed; }
+
+  /* SECTIONS */
+  section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 48px 80px;
+  }
+
+  /* HERO */
+  #hero {
+    background: #fff;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-eyebrow {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--blue);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-title {
+    font-size: clamp(56px, 8vw, 96px);
+    font-weight: 700;
+    letter-spacing: -3px;
+    line-height: 1.02;
+    color: var(--gray-700);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.35s forwards;
+  }
+
+  .hero-title span { color: var(--blue); }
+
+  .hero-sub {
+    font-size: 21px;
+    font-weight: 300;
+    color: var(--gray-400);
+    max-width: 580px;
+    line-height: 1.5;
+    margin: 0 auto 48px;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.5s forwards;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.65s forwards;
+  }
+
+  .btn-primary {
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    border-radius: 980px;
+    padding: 14px 28px;
+    font-size: 17px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn-primary:hover { background: #0077ed; transform: scale(1.02); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--blue);
+    border: 1.5px solid var(--blue);
+    border-radius: 980px;
+    padding: 14px 28px;
+    font-size: 17px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover { background: var(--blue-light); }
+
+  /* MAP VISUAL */
+  .hero-visual {
+    margin-top: 72px;
+    width: 100%;
+    max-width: 860px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.8s forwards;
+  }
+
+  .map-mock {
+    background: var(--gray-50);
+    border-radius: 24px;
+    border: 1px solid var(--gray-100);
+    height: 420px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .map-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(134,134,139,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(134,134,139,0.08) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .map-road-h {
+    position: absolute;
+    background: rgba(255,255,255,0.9);
+    height: 12px;
+    left: 0; right: 0;
+    border-top: 1px solid var(--gray-100);
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .map-road-v {
+    position: absolute;
+    background: rgba(255,255,255,0.9);
+    width: 12px;
+    top: 0; bottom: 0;
+    border-left: 1px solid var(--gray-100);
+    border-right: 1px solid var(--gray-100);
+  }
+
+  .map-pin {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: pinDrop 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+    cursor: pointer;
+  }
+
+  .map-pin:hover .pin-tooltip { opacity: 1; transform: translateY(-4px); }
+
+  .pin-dot {
+    width: 32px; height: 32px;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  .pin-dot span { transform: rotate(45deg); }
+
+  .pin-tooltip {
+    position: absolute;
+    bottom: 42px;
+    background: var(--gray-700);
+    color: #fff;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 11px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: all 0.2s;
+    pointer-events: none;
+  }
+
+  .pin-label {
+    font-size: 10px;
+    font-weight: 500;
+    margin-top: 4px;
+    color: var(--gray-400);
+  }
+
+  @keyframes pinDrop {
+    from { transform: translateY(-40px) scale(0.5); opacity: 0; }
+    to   { transform: translateY(0) scale(1); opacity: 1; }
+  }
+
+  /* INDEX STRIP */
+  #index {
+    background: var(--gray-50);
+    min-height: auto;
+    padding: 80px 48px;
+  }
+
+  .index-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray-400);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .index-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1px;
+    background: var(--gray-100);
+    border-radius: 18px;
+    overflow: hidden;
+    max-width: 1000px;
+    width: 100%;
+    border: 1px solid var(--gray-100);
+  }
+
+  .index-item {
+    background: #fff;
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .index-item:hover { background: var(--blue-light); }
+
+  .index-num {
+    font-size: 13px;
+    color: var(--blue);
+    font-weight: 600;
+  }
+
+  .index-title {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    line-height: 1.3;
+  }
+
+  .index-desc {
+    font-size: 13px;
+    color: var(--gray-400);
+    line-height: 1.5;
+  }
+
+  /* CONTENT SECTIONS */
+  .content-section {
+    padding: 120px 48px;
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .section-eyebrow {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--blue);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    line-height: 1.08;
+    margin-bottom: 24px;
+  }
+
+  .section-body {
+    font-size: 19px;
+    font-weight: 300;
+    color: #333;
+    line-height: 1.65;
+    max-width: 680px;
+  }
+
+  /* PROBLEM SECTION */
+  #problema {
+    background: #fff;
+  }
+
+  .problem-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .stat-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .stat-card {
+    background: var(--gray-50);
+    border-radius: 18px;
+    padding: 28px 24px;
+    border: 1px solid var(--gray-100);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+  }
+
+  .stat-num {
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-desc {
+    font-size: 14px;
+    color: var(--gray-400);
+    line-height: 1.4;
+  }
+
+  /* FEATURES BENTO */
+  #funzionamento {
+    background: var(--gray-50);
+    padding: 0;
+    min-height: auto;
+  }
+
+  .bento-section {
+    padding: 120px 48px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto;
+    gap: 16px;
+    margin-top: 64px;
+  }
+
+  .bento-card {
+    background: #fff;
+    border-radius: 22px;
+    border: 1px solid var(--gray-100);
+    padding: 36px 32px;
+    transition: transform 0.25s, box-shadow 0.25s;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .bento-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 48px rgba(0,0,0,0.1);
+  }
+
+  .bento-card.large { grid-column: span 7; }
+  .bento-card.medium { grid-column: span 5; }
+  .bento-card.wide { grid-column: span 12; }
+  .bento-card.third { grid-column: span 4; }
+
+  .bento-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .bento-card-title {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+
+  .bento-card-body {
+    font-size: 15px;
+    color: var(--gray-400);
+    line-height: 1.6;
+  }
+
+  /* CATEGORY PILLS */
+  .category-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 24px;
+  }
+
+  .pill {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-100);
+    border-radius: 980px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray-700);
+    transition: all 0.2s;
+    cursor: default;
+  }
+
+  .pill:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
+
+  /* URGENCY BAR */
+  .urgency-scale {
+    display: flex;
+    gap: 6px;
+    margin-top: 20px;
+    align-items: center;
+  }
+
+  .urgency-bar {
+    flex: 1;
+    height: 10px;
+    border-radius: 6px;
+    transition: transform 0.2s;
+    cursor: pointer;
+  }
+
+  .urgency-bar:hover { transform: scaleY(1.5); }
+
+  /* AGGREGAZIONE */
+  #aggregazione { background: #fff; }
+
+  .agg-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .signal-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .signal-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--gray-50);
+    border-radius: 14px;
+    padding: 16px 20px;
+    border: 1px solid var(--gray-100);
+    transition: all 0.3s;
+  }
+
+  .signal-row:hover { border-color: var(--blue); background: var(--blue-light); }
+
+  .signal-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 600;
+    color: #fff;
+  }
+
+  .signal-info { flex: 1; }
+
+  .signal-name { font-size: 14px; font-weight: 500; }
+
+  .signal-meta { font-size: 12px; color: var(--gray-400); }
+
+  .signal-dots {
+    display: flex;
+    gap: 3px;
+  }
+
+  .signal-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+
+  .merge-arrow {
+    text-align: center;
+    font-size: 28px;
+    color: var(--blue);
+    padding: 8px 0;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  .result-card {
+    background: var(--blue);
+    color: #fff;
+    border-radius: 18px;
+    padding: 28px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 4px;
+  }
+
+  .result-icon { font-size: 32px; }
+
+  .result-title { font-size: 17px; font-weight: 600; }
+  .result-sub { font-size: 13px; opacity: 0.75; margin-top: 4px; }
+
+  /* PA SECTION */
+  #pa {
+    background: var(--gray-700);
+    color: #fff;
+    min-height: auto;
+    padding: 0;
+  }
+
+  .pa-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 120px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .pa-inner .section-title { color: #fff; }
+  .pa-inner .section-body { color: rgba(255,255,255,0.65); }
+  .pa-inner .section-eyebrow { color: #64d2ff; }
+
+  .dashboard-mock {
+    background: rgba(255,255,255,0.07);
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 24px;
+  }
+
+  .dash-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .dash-title { font-size: 15px; font-weight: 600; }
+  .dash-badge {
+    background: var(--green);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 980px;
+  }
+
+  .dash-rows { display: flex; flex-direction: column; gap: 10px; }
+
+  .dash-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .dash-cat-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .dash-row-label { flex: 1; font-size: 13px; color: rgba(255,255,255,0.8); }
+  .dash-row-bar-wrap { width: 100px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; }
+  .dash-row-bar { height: 100%; border-radius: 3px; }
+  .dash-row-count { font-size: 12px; color: rgba(255,255,255,0.5); min-width: 30px; text-align: right; }
+
+  /* OBIETTIVO */
+  #obiettivo {
+    background: #fff;
+    text-align: center;
+    min-height: auto;
+    padding: 0;
+  }
+
+  .obiettivo-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 140px 48px;
+  }
+
+  .big-statement {
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+    margin-bottom: 32px;
+  }
+
+  .big-statement em {
+    font-style: normal;
+    color: var(--blue);
+  }
+
+  .obiettivo-body {
+    font-size: 19px;
+    font-weight: 300;
+    color: var(--gray-400);
+    line-height: 1.65;
+    margin-bottom: 48px;
+  }
+
+  /* FOOTER CTA */
+  #cta {
+    background: linear-gradient(180deg, #f5f5f7 0%, #e8e8ed 100%);
+    text-align: center;
+    min-height: auto;
+    padding: 120px 48px;
+  }
+
+  .cta-title {
+    font-size: clamp(36px, 5vw, 52px);
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    margin-bottom: 20px;
+  }
+
+  .cta-sub {
+    font-size: 19px;
+    color: var(--gray-400);
+    margin-bottom: 48px;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* SCROLL INDICATOR */
+  .scroll-hint {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.1s forwards;
+  }
+
+  .scroll-hint span {
+    font-size: 12px;
+    color: var(--gray-400);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .scroll-arrow {
+    width: 24px; height: 24px;
+    border: 1.5px solid var(--gray-400);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(5px); }
+  }
+
+  /* Divider */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--gray-100);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    section { padding: 80px 24px; }
+    .problem-layout,
+    .agg-layout,
+    .pa-inner { grid-template-columns: 1fr; gap: 48px; }
+    .bento-card.large, .bento-card.medium, .bento-card.wide, .bento-card.third {
+      grid-column: span 12;
+    }
+    .stat-cards { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-logo">Urbania</div>
+  <ul class="nav-links">
+    <li><a href="#problema">Il Problema</a></li>
+    <li><a href="#funzionamento">Come Funziona</a></li>
+    <li><a href="#aggregazione">Aggregazione</a></li>
+    <li><a href="#pa">Per le PA</a></li>
+    <li><a href="#obiettivo">Obiettivo</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Scopri di più</button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-eyebrow">Intelligenza civica</div>
+  <h1 class="hero-title">La città<br>che <span>parla</span>.</h1>
+  <p class="hero-sub">Urbania trasforma ogni segnalazione urbana in dato strutturato. Visibile. Misurabile. Risolvibile.</p>
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="document.getElementById('problema').scrollIntoView({behavior:'smooth'})">Scopri il progetto</button>
+    <button class="btn-secondary" onclick="document.getElementById('index').scrollIntoView({behavior:'smooth'})">Vedi l'indice</button>
+  </div>
+
+  <div class="hero-visual">
+    <div class="map-mock">
+      <div class="map-grid"></div>
+      <!-- Roads -->
+      <div class="map-road-h" style="top: 38%;"></div>
+      <div class="map-road-h" style="top: 68%;"></div>
+      <div class="map-road-v" style="left: 30%;"></div>
+      <div class="map-road-v" style="left: 62%;"></div>
+
+      <!-- Pins -->
+      <div class="map-pin" style="top: 22%; left: 24%; animation-delay: 1s;">
+        <div class="pin-dot" style="background:#ff453a;"><span>🕳</span></div>
+        <div class="pin-tooltip">Buca stradale — urgenza 4/5</div>
+        <div class="pin-label">Buca</div>
+      </div>
+      <div class="map-pin" style="top: 50%; left: 50%; animation-delay: 1.2s;">
+        <div class="pin-dot" style="background:#ff9f0a;"><span>🗑</span></div>
+        <div class="pin-tooltip">Rifiuti abbandonati — urgenza 3/5</div>
+        <div class="pin-label">Rifiuti</div>
+      </div>
+      <div class="map-pin" style="top: 30%; left: 68%; animation-delay: 1.4s;">
+        <div class="pin-dot" style="background:#0071e3;"><span>🚧</span></div>
+        <div class="pin-tooltip">Segnaletica mancante — urgenza 2/5</div>
+        <div class="pin-label">Segnaletica</div>
+      </div>
+      <div class="map-pin" style="top: 65%; left: 20%; animation-delay: 1.6s;">
+        <div class="pin-dot" style="background:#30d158;"><span>💡</span></div>
+        <div class="pin-tooltip">Illuminazione guasta — urgenza 5/5</div>
+        <div class="pin-label">Luce</div>
+      </div>
+      <div class="map-pin" style="top: 72%; left: 72%; animation-delay: 1.8s;">
+        <div class="pin-dot" style="background:#bf5af2;"><span>🔊</span></div>
+        <div class="pin-tooltip">Rumore eccessivo — urgenza 2/5</div>
+        <div class="pin-label">Rumore</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scorri</span>
+    <div class="scroll-arrow">
+      <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
+        <path d="M1 1L5 5L9 1" stroke="#86868b" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- INDEX -->
+<div class="divider"></div>
+<div id="index" style="background:var(--gray-50); padding: 80px 48px; display:flex; flex-direction:column; align-items:center;">
+  <p class="index-label">Indice</p>
+  <div class="index-grid">
+    <a href="#problema" class="index-item">
+      <div class="index-num">01</div>
+      <div class="index-title">La presenza del problema</div>
+      <div class="index-desc">Le città italiane generano ogni giorno migliaia di segnalazioni disperse.</div>
+    </a>
+    <a href="#funzionamento" class="index-item">
+      <div class="index-num">02</div>
+      <div class="index-title">Come funziona Urbania</div>
+      <div class="index-desc">Geolocalizzazione, categorie e urgenza per ogni segnalazione.</div>
+    </a>
+    <a href="#aggregazione" class="index-item">
+      <div class="index-num">03</div>
+      <div class="index-title">Aggregazione dei dati</div>
+      <div class="index-desc">Più segnalazioni dello stesso problema si unificano automaticamente.</div>
+    </a>
+    <a href="#pa" class="index-item">
+      <div class="index-num">04</div>
+      <div class="index-title">Supporto alle PA</div>
+      <div class="index-desc">I Comuni accedono a un cruscotto priorità basato su dati reali.</div>
+    </a>
+    <a href="#obiettivo" class="index-item">
+      <div class="index-num">05</div>
+      <div class="index-title">L'obiettivo finale</div>
+      <div class="index-desc">Un sistema di intelligenza civica scalabile e misurabile.</div>
+    </a>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 01 PROBLEMA -->
+<section id="problema" style="background:#fff; min-height:auto; padding:0;">
+  <div class="content-section reveal">
+    <p class="section-eyebrow">01 — Il problema</p>
+    <div class="problem-layout">
+      <div>
+        <h2 class="section-title">Le città italiane sono piene di problemi invisibili.</h2>
+        <p class="section-body">I cittadini osservano buche, rifiuti, guasti e degrado ogni giorno. Ma queste osservazioni restano frammentate: un post sui social, un messaggio al comune, o — più spesso — il silenzio. Nessun sistema le raccoglie, le organizza, le rende visibili e comparabili.</p>
+        <br>
+        <p class="section-body">Il risultato? Problemi urgenti restano ignorati. Le amministrazioni agiscono senza dati strutturati. I cittadini perdono fiducia nel sistema.</p>
+      </div>
+      <div class="stat-cards">
+        <div class="stat-card">
+          <div class="stat-num" style="color:var(--red);">7.904</div>
+          <div class="stat-desc">comuni in Italia senza un canale digitale strutturato per le segnalazioni</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" style="color:var(--orange);">68%</div>
+          <div class="stat-desc">dei cittadini ha rinunciato a segnalare un problema almeno una volta</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" style="color:var(--blue);">∞</div>
+          <div class="stat-desc">segnalazioni disperse ogni anno sui social media senza risposta istituzionale</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" style="color:var(--green);">0</div>
+          <div class="stat-desc">sistemi nazionali di aggregazione civica geolocalizzata in uso oggi</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 02 FUNZIONAMENTO -->
+<section id="funzionamento" style="background:var(--gray-50); min-height:auto; padding:0;">
+  <div class="bento-section reveal">
+    <p class="section-eyebrow">02 — Come funziona</p>
+    <h2 class="section-title" style="max-width:600px;">Semplice per il cittadino. Potente per la città.</h2>
+
+    <div class="bento-grid">
+      <!-- Large: mappa interattiva -->
+      <div class="bento-card large">
+        <div class="bento-icon" style="background:#e8f1fc;">📍</div>
+        <h3 class="bento-card-title">Geolocalizzazione precisa</h3>
+        <p class="bento-card-body">L'utente apre la mappa interattiva, si muove nella propria città esattamente come su Google Maps e tocca il punto esatto del problema. Ogni segnalazione ha coordinate precise, non una via generica.</p>
+        <div style="margin-top:28px; background:var(--gray-50); border-radius:14px; padding:20px; border:1px solid var(--gray-100);">
+          <div style="display:flex; gap:8px; align-items:center; margin-bottom:12px;">
+            <div style="width:10px;height:10px;border-radius:50%;background:var(--red);"></div>
+            <span style="font-size:13px; color:var(--gray-400);">Buca via Roma 14 — 41.9028°N, 12.4964°E</span>
+          </div>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <div style="width:10px;height:10px;border-radius:50%;background:var(--orange);"></div>
+            <span style="font-size:13px; color:var(--gray-400);">Rifiuti abbandonati — piazza Municipio</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Medium: categorie -->
+      <div class="bento-card medium">
+        <div class="bento-icon" style="background:#fff0c2;">🗂</div>
+        <h3 class="bento-card-title">Categorie predefinite</h3>
+        <p class="bento-card-body">Ogni segnalazione appartiene a una categoria. Niente testi liberi non strutturati: tutto è comparabile e analizzabile.</p>
+        <div class="category-pills">
+          <span class="pill">🕳 Buche stradali</span>
+          <span class="pill">🗑 Rifiuti</span>
+          <span class="pill">🚧 Segnaletica</span>
+          <span class="pill">💡 Illuminazione</span>
+          <span class="pill">🔊 Rumore</span>
+          <span class="pill">🔧 Manutenzione</span>
+          <span class="pill">🔒 Sicurezza</span>
+        </div>
+      </div>
+
+      <!-- Wide: urgenza -->
+      <div class="bento-card wide">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center;">
+          <div>
+            <div class="bento-icon" style="background:#fce8e8;">⚡</div>
+            <h3 class="bento-card-title">Scala di urgenza 1–5</h3>
+            <p class="bento-card-body">Il cittadino attribuisce un livello di urgenza da 1 (bassa) a 5 (critica). Il sistema calcola l'urgenza media aggregando tutte le segnalazioni dello stesso problema.</p>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+              <span style="font-size:13px; color:var(--gray-400);">Urgenza media</span>
+              <span style="font-size:13px; font-weight:600;">4.2 / 5</span>
+            </div>
+            <div class="urgency-scale">
+              <div class="urgency-bar" style="background:#30d158;" title="1"></div>
+              <div class="urgency-bar" style="background:#a8e063;" title="2"></div>
+              <div class="urgency-bar" style="background:#ffcc00;" title="3"></div>
+              <div class="urgency-bar" style="background:#ff9f0a;" title="4"></div>
+              <div class="urgency-bar" style="background:#ff453a; transform: scaleY(1.5);" title="5"></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-top:8px;">
+              <span style="font-size:11px; color:var(--gray-400);">Bassa</span>
+              <span style="font-size:11px; color:var(--gray-400);">Critica</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 cards stato -->
+      <div class="bento-card third">
+        <div class="bento-icon" style="background:#e3f8ee;">✅</div>
+        <h3 class="bento-card-title">Stato dinamico</h3>
+        <p class="bento-card-body">Le segnalazioni si aggiornano nel tempo: aperta, in lavorazione, risolta. Il sistema è vivo.</p>
+      </div>
+      <div class="bento-card third">
+        <div class="bento-icon" style="background:#f0e8fc;">📸</div>
+        <h3 class="bento-card-title">Descrizione + foto</h3>
+        <p class="bento-card-body">Ogni utente può aggiungere una breve descrizione e allegare una foto per documentare il problema.</p>
+      </div>
+      <div class="bento-card third">
+        <div class="bento-icon" style="background:#e8f1fc;">📱</div>
+        <h3 class="bento-card-title">Mobile-first</h3>
+        <p class="bento-card-body">Progettata per smartphone. Segnala mentre cammini, in tre tap. Zero frizioni.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 03 AGGREGAZIONE -->
+<section id="aggregazione" style="background:#fff; min-height:auto; padding:0;">
+  <div class="content-section reveal">
+    <p class="section-eyebrow">03 — Aggregazione</p>
+    <div class="agg-layout">
+      <div class="signal-stack">
+        <div class="signal-row">
+          <div class="signal-avatar" style="background:#0071e3;">MR</div>
+          <div class="signal-info">
+            <div class="signal-name">Marco R. segnala</div>
+            <div class="signal-meta">Buca via Garibaldi — urgenza 3/5</div>
+          </div>
+          <div class="signal-dots">
+            <div class="signal-dot" style="background:#30d158;"></div>
+            <div class="signal-dot" style="background:#30d158;"></div>
+            <div class="signal-dot" style="background:#ffcc00;"></div>
+            <div class="signal-dot" style="background:#e0e0e5;"></div>
+            <div class="signal-dot" style="background:#e0e0e5;"></div>
+          </div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-avatar" style="background:#bf5af2;">SL</div>
+          <div class="signal-info">
+            <div class="signal-name">Sara L. segnala</div>
+            <div class="signal-meta">Buca via Garibaldi — urgenza 5/5</div>
+          </div>
+          <div class="signal-dots">
+            <div class="signal-dot" style="background:#30d158;"></div>
+            <div class="signal-dot" style="background:#30d158;"></div>
+            <div class="signal-dot" style="background:#ffcc00;"></div>
+            <div class="signal-dot" style="background:#ff9f0a;"></div>
+            <div class="signal-dot" style="background:#ff453a;"></div>
+          </div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-avatar" style="background:#ff9f0a;">AL</div>
+          <div class="signal-info">
+            <div class="signal-name">Andrea L. segnala</div>
+            <div class="signal-meta">Buca via Garibaldi — urgenza 4/5</div>
+          </div>
+          <div class="signal-dots">
+            <div class="signal-dot" style="background:#30d158;"></div>
+            <div class="signal-dot" style="background:#30d158;"></div>
+            <div class="signal-dot" style="background:#ffcc00;"></div>
+            <div class="signal-dot" style="background:#ff9f0a;"></div>
+            <div class="signal-dot" style="background:#e0e0e5;"></div>
+          </div>
+        </div>
+        <div class="merge-arrow">⬇</div>
+        <div class="result-card">
+          <div class="result-icon">🔴</div>
+          <div>
+            <div class="result-title">Buca via Garibaldi — 3 segnalazioni</div>
+            <div class="result-sub">Urgenza media aggregata: 4.0 / 5 — Priorità alta</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h2 class="section-title">Molte voci,<br>un dato chiaro.</h2>
+        <p class="section-body">Quando più cittadini segnalano lo stesso problema, il sistema lo riconosce e unifica le segnalazioni. La rilevanza cresce con il numero di persone coinvolte e con l'urgenza media attribuita.</p>
+        <br>
+        <p class="section-body">Il risultato è un indicatore affidabile della reale priorità del problema — non basato su una singola opinione, ma su dati aggregati, oggettivi e rappresentativi.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 04 PA -->
+<section id="pa" style="min-height:auto; padding:0;">
+  <div class="pa-inner reveal">
+    <div>
+      <p class="section-eyebrow">04 — Supporto alle PA</p>
+      <h2 class="section-title">Dati per chi<br>deve decidere.</h2>
+      <p class="section-body">Le amministrazioni comunali accedono a un cruscotto dedicato che mostra le priorità urbane in forma già strutturata. Niente interpretazione soggettiva: i dati arrivano già organizzati per categoria, zona e urgenza.</p>
+      <br>
+      <p class="section-body">Urbania diventa uno strumento di supporto decisionale basato sull'intelligenza collettiva dei cittadini.</p>
+    </div>
+    <div class="dashboard-mock">
+      <div class="dash-header">
+        <span class="dash-title">Cruscotto priorità — Comune di Roma</span>
+        <span class="dash-badge">Live</span>
+      </div>
+      <div class="dash-rows">
+        <div class="dash-row">
+          <div class="dash-cat-dot" style="background:#ff453a;"></div>
+          <div class="dash-row-label">Buche stradali</div>
+          <div class="dash-row-bar-wrap"><div class="dash-row-bar" style="width:88%; background:#ff453a;"></div></div>
+          <div class="dash-row-count">312</div>
+        </div>
+        <div class="dash-row">
+          <div class="dash-cat-dot" style="background:#ff9f0a;"></div>
+          <div class="dash-row-label">Rifiuti abbandonati</div>
+          <div class="dash-row-bar-wrap"><div class="dash-row-bar" style="width:65%; background:#ff9f0a;"></div></div>
+          <div class="dash-row-count">231</div>
+        </div>
+        <div class="dash-row">
+          <div class="dash-cat-dot" style="background:#ffcc00;"></div>
+          <div class="dash-row-label">Illuminazione</div>
+          <div class="dash-row-bar-wrap"><div class="dash-row-bar" style="width:44%; background:#ffcc00;"></div></div>
+          <div class="dash-row-count">156</div>
+        </div>
+        <div class="dash-row">
+          <div class="dash-cat-dot" style="background:#0071e3;"></div>
+          <div class="dash-row-label">Segnaletica</div>
+          <div class="dash-row-bar-wrap"><div class="dash-row-bar" style="width:28%; background:#0071e3;"></div></div>
+          <div class="dash-row-count">99</div>
+        </div>
+        <div class="dash-row">
+          <div class="dash-cat-dot" style="background:#30d158;"></div>
+          <div class="dash-row-label">Manutenzione verde</div>
+          <div class="dash-row-bar-wrap"><div class="dash-row-bar" style="width:18%; background:#30d158;"></div></div>
+          <div class="dash-row-count">63</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 05 OBIETTIVO -->
+<section id="obiettivo" style="background:#fff; min-height:auto; padding:0;">
+  <div class="obiettivo-inner reveal">
+    <p class="section-eyebrow" style="margin-bottom:24px;">05 — L'obiettivo</p>
+    <h2 class="big-statement">Trasformare osservazioni<br>individuali in <em>intelligenza collettiva</em>.</h2>
+    <p class="obiettivo-body">Urbania non è un social network. Non è uno sportello digitale. È un sistema di intelligenza civica: rende i problemi urbani visibili, misurabili e gestibili — trasformando la frammentazione in priorità condivise.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Inizia ora</button>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FOOTER -->
+<section id="cta">
+  <h2 class="cta-title">Pronto a costruire<br>la città del futuro?</h2>
+  <p class="cta-sub">Urbania — disponibile su iOS e Android dal 2025.</p>
+  <div class="hero-btns">
+    <button class="btn-primary">Richiedi la demo</button>
+    <button class="btn-secondary">Contatta il team</button>
+  </div>
+  <p style="font-size:13px; color:var(--gray-400); margin-top:48px;">© 2025 Urbania. Tutti i diritti riservati.</p>
+</section>
+
+<script>
+  // Intersection observer for reveal animations
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  reveals.forEach(el => obs.observe(el));
+
+  // Nav active state
+  const sections = document.querySelectorAll('section[id], div[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 80) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.opacity = a.getAttribute('href') === '#'+current ? '1' : '0.65';
+      a.style.fontWeight = a.getAttribute('href') === '#'+current ? '500' : '400';
+    });
+  });
+</script>
+</body>
+</html>
