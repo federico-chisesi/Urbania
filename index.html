@@ -1292,163 +1292,377 @@
       <p class="section-body" style="max-width:640px; margin-bottom:0;">Il prezzo scala con la complessità del comune. Ogni piano include esattamente ciò che serve a quella fascia — niente di meno, niente che non verrà usato.</p>
 
       <style>
-        .bm-pricing-h { display: flex; flex-direction: column; gap: 12px; margin-top: 56px; }
-        .bm-plan-h {
-          display: grid;
-          grid-template-columns: 220px 140px 1fr;
-          align-items: center;
-          gap: 32px;
-          background: var(--gray-50);
+        /* ── Accordion piani ── */
+        .bm-pricing-h { display: flex; flex-direction: column; gap: 10px; margin-top: 56px; }
+
+        .bm-acc {
           border: 1px solid var(--gray-100);
           border-radius: 20px;
+          overflow: hidden;
+          transition: box-shadow 0.2s;
+        }
+        .bm-acc:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.07); }
+        .bm-acc.featured-h { border-color: var(--blue); }
+
+        .bm-acc-header {
+          display: grid;
+          grid-template-columns: 220px 140px 1fr 36px;
+          align-items: center;
+          gap: 32px;
           padding: 24px 32px;
-          transition: transform 0.2s, box-shadow 0.2s;
+          cursor: pointer;
+          background: var(--gray-50);
+          user-select: none;
+          transition: background 0.2s;
         }
-        .bm-plan-h:hover { transform: translateX(4px); box-shadow: 0 8px 32px rgba(0,0,0,0.07); }
-        .bm-plan-h.featured-h {
-          background: var(--blue);
-          border-color: var(--blue);
-          color: #fff;
-        }
-        .bm-plan-h-left { display: flex; flex-direction: column; gap: 4px; }
-        .bm-plan-h-badge {
+        .bm-acc-header:hover { background: #ececf0; }
+        .featured-h .bm-acc-header { background: var(--blue); color: #fff; }
+        .featured-h .bm-acc-header:hover { background: #0077ed; }
+
+        .bm-acc-left { display: flex; flex-direction: column; gap: 4px; }
+        .bm-acc-badge {
           display: inline-block; font-size: 11px; font-weight: 600;
           letter-spacing: 0.07em; text-transform: uppercase;
           background: var(--blue-light); color: var(--blue);
           border-radius: 980px; padding: 3px 12px;
           width: fit-content; margin-bottom: 6px;
         }
-        .featured-h .bm-plan-h-badge { background: rgba(255,255,255,0.22); color: #fff; }
-        .bm-plan-h-name { font-size: 19px; font-weight: 700; letter-spacing: -0.4px; line-height: 1.2; }
-        .bm-plan-h-target { font-size: 13px; color: var(--gray-400); margin-top: 2px; }
-        .featured-h .bm-plan-h-target { color: rgba(255,255,255,0.7); }
-        .bm-plan-h-price-wrap { text-align: center; }
-        .bm-plan-h-price { font-size: 36px; font-weight: 700; letter-spacing: -1.5px; line-height: 1; }
-        .bm-plan-h-period { font-size: 12px; color: var(--gray-400); margin-top: 4px; }
-        .featured-h .bm-plan-h-period { color: rgba(255,255,255,0.65); }
-        .bm-plan-h-feats { display: flex; flex-wrap: wrap; gap: 8px 20px; }
-        .bm-plan-h-feat { font-size: 14px; color: #444; display: flex; align-items: center; gap: 6px; }
-        .featured-h .bm-plan-h-feat { color: rgba(255,255,255,0.9); }
-        .bm-plan-h-feat-check { color: var(--green); font-weight: 700; }
-        .featured-h .bm-plan-h-feat-check { color: #a8ffbe; }
-        .bm-go-label {
-          display: inline-flex; align-items: center; gap: 6px;
-          font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
-          text-transform: uppercase; color: #fff;
-          background: rgba(255,255,255,0.18); border-radius: 980px;
-          padding: 3px 12px; margin-left: 10px; vertical-align: middle;
+        .featured-h .bm-acc-badge { background: rgba(255,255,255,0.22); color: #fff; }
+        .bm-acc-name { font-size: 18px; font-weight: 700; letter-spacing: -0.4px; line-height: 1.2; }
+        .bm-acc-target { font-size: 13px; color: var(--gray-400); margin-top: 2px; }
+        .featured-h .bm-acc-target { color: rgba(255,255,255,0.7); }
+
+        .bm-acc-price-wrap { text-align: center; }
+        .bm-acc-price { font-size: 34px; font-weight: 700; letter-spacing: -1.5px; line-height: 1; }
+        .bm-acc-period { font-size: 12px; color: var(--gray-400); margin-top: 4px; }
+        .featured-h .bm-acc-period { color: rgba(255,255,255,0.65); }
+
+        .bm-acc-summary { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+        .bm-acc-tag {
+          font-size: 13px; color: #555;
+          display: flex; align-items: center; gap: 5px;
         }
+        .featured-h .bm-acc-tag { color: rgba(255,255,255,0.85); }
+        .bm-acc-tag-check { color: var(--green); font-weight: 700; font-size: 12px; }
+        .featured-h .bm-acc-tag-check { color: #a8ffbe; }
+
+        .bm-acc-chevron {
+          width: 28px; height: 28px; border-radius: 50%;
+          background: rgba(0,0,0,0.06);
+          display: flex; align-items: center; justify-content: center;
+          transition: transform 0.3s, background 0.2s;
+          flex-shrink: 0;
+        }
+        .featured-h .bm-acc-chevron { background: rgba(255,255,255,0.2); }
+        .bm-acc-chevron svg { transition: transform 0.3s; }
+        .bm-acc.open .bm-acc-chevron svg { transform: rotate(180deg); }
+
+        /* Dropdown body */
+        .bm-acc-body {
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.4s ease, padding 0.3s ease;
+          background: #fff;
+          border-top: 0px solid var(--gray-100);
+        }
+        .bm-acc.open .bm-acc-body {
+          max-height: 600px;
+          border-top-width: 1px;
+        }
+        .featured-h .bm-acc-body { border-top-color: rgba(0,113,227,0.15); }
+
+        .bm-acc-body-inner {
+          padding: 28px 32px;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px 40px;
+        }
+
+        .bm-acc-feat {
+          display: flex; gap: 12px; align-items: flex-start;
+          padding: 14px 16px;
+          background: var(--gray-50);
+          border: 1px solid var(--gray-100);
+          border-radius: 14px;
+          transition: border-color 0.2s;
+        }
+        .bm-acc-feat:hover { border-color: var(--blue); }
+        .bm-acc-feat-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+        .bm-acc-feat-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+        .bm-acc-feat-desc { font-size: 13px; color: var(--gray-400); line-height: 1.5; }
+
+        .bm-go-label {
+          display: inline-flex; align-items: center; gap: 5px;
+          font-size: 10px; font-weight: 600; letter-spacing: 0.06em;
+          text-transform: uppercase; color: #fff;
+          background: rgba(255,255,255,0.2); border-radius: 980px;
+          padding: 2px 10px; margin-left: 8px; vertical-align: middle;
+        }
+
+        /* ── Moduli accordion ── */
+        .bm-modules-acc {
+          margin-top: 24px;
+          border: 1px solid var(--gray-100);
+          border-radius: 18px;
+          overflow: hidden;
+        }
+        .bm-modules-header {
+          display: flex; justify-content: space-between; align-items: center;
+          padding: 22px 28px;
+          background: var(--gray-50);
+          cursor: pointer;
+          user-select: none;
+          transition: background 0.2s;
+        }
+        .bm-modules-header:hover { background: #ececf0; }
+        .bm-modules-title { font-size: 15px; font-weight: 600; color: var(--gray-700); }
+        .bm-modules-sub { font-size: 13px; color: var(--gray-400); margin-top: 2px; }
+        .bm-modules-body {
+          max-height: 0; overflow: hidden;
+          transition: max-height 0.4s ease;
+          background: #fff;
+          border-top: 0px solid var(--gray-100);
+        }
+        .bm-modules-acc.open .bm-modules-body {
+          max-height: 800px;
+          border-top-width: 1px;
+        }
+        .bm-modules-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+          padding: 24px 28px;
+        }
+        .bm-module-card {
+          display: flex; gap: 14px; align-items: flex-start;
+          padding: 18px 20px;
+          background: var(--gray-50);
+          border: 1px solid var(--gray-100);
+          border-radius: 14px;
+          transition: border-color 0.2s, background 0.2s;
+        }
+        .bm-module-card:hover { border-color: var(--blue); background: var(--blue-light); }
+        .bm-module-icon { font-size: 24px; flex-shrink: 0; }
+        .bm-module-name { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+        .bm-module-price {
+          display: inline-block; font-size: 12px; font-weight: 600;
+          color: var(--blue); background: var(--blue-light);
+          border-radius: 980px; padding: 2px 10px; margin-bottom: 6px;
+        }
+        .bm-module-desc { font-size: 13px; color: var(--gray-400); line-height: 1.5; }
+
         @media (max-width: 768px) {
-          .bm-plan-h { grid-template-columns: 1fr; }
-          .bm-plan-h-price-wrap { text-align: left; }
+          .bm-acc-header { grid-template-columns: 1fr 100px 28px; gap: 16px; }
+          .bm-acc-summary { display: none; }
+          .bm-acc-body-inner { grid-template-columns: 1fr; }
+          .bm-modules-grid { grid-template-columns: 1fr; }
         }
       </style>
 
       <div class="bm-pricing-h">
+
         <!-- FREE -->
-        <div class="bm-plan-h">
-          <div class="bm-plan-h-left">
-            <div class="bm-plan-h-badge">Free</div>
-            <div class="bm-plan-h-name">Comuni con meno<br>di 5 mila abitanti</div>
-            <div class="bm-plan-h-target">Accesso base garantito</div>
+        <div class="bm-acc" id="acc-free">
+          <div class="bm-acc-header" onclick="toggleAcc('acc-free')">
+            <div class="bm-acc-left">
+              <div class="bm-acc-badge">Free</div>
+              <div class="bm-acc-name">Comuni con meno<br>di 5 mila abitanti</div>
+              <div class="bm-acc-target">Accesso base garantito</div>
+            </div>
+            <div class="bm-acc-price-wrap">
+              <div class="bm-acc-price">€0</div>
+              <div class="bm-acc-period">per sempre</div>
+            </div>
+            <div class="bm-acc-summary">
+              <div class="bm-acc-tag"><span class="bm-acc-tag-check">✓</span> Mappa pubblica</div>
+              <div class="bm-acc-tag"><span class="bm-acc-tag-check">✓</span> Priority score</div>
+              <div class="bm-acc-tag"><span class="bm-acc-tag-check">✓</span> Dataset aggregato</div>
+            </div>
+            <div class="bm-acc-chevron"><svg width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1L6 6L11 1" stroke="#86868b" stroke-width="1.8" stroke-linecap="round"/></svg></div>
           </div>
-          <div class="bm-plan-h-price-wrap">
-            <div class="bm-plan-h-price">€0</div>
-            <div class="bm-plan-h-period">per sempre</div>
-          </div>
-          <div class="bm-plan-h-feats">
-            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Mappa pubblica delle segnalazioni</div>
-            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Priority score automatico</div>
-            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Contribuisce al dataset aggregato</div>
+          <div class="bm-acc-body">
+            <div class="bm-acc-body-inner">
+              <div class="bm-acc-feat"><div class="bm-acc-feat-icon">🗺</div><div><div class="bm-acc-feat-title">Mappa pubblica delle segnalazioni</div><div class="bm-acc-feat-desc">Visualizzazione geolocalizzata di tutte le segnalazioni attive nel territorio comunale, accessibile anche ai cittadini.</div></div></div>
+              <div class="bm-acc-feat"><div class="bm-acc-feat-icon">⚡</div><div><div class="bm-acc-feat-title">Priority score automatico</div><div class="bm-acc-feat-desc">Il sistema calcola automaticamente un indice di priorità per ogni segnalazione basato su frequenza, urgenza e persistenza.</div></div></div>
+              <div class="bm-acc-feat"><div class="bm-acc-feat-icon">🧠</div><div><div class="bm-acc-feat-title">Contributo al dataset aggregato</div><div class="bm-acc-feat-desc">Ogni segnalazione arricchisce il database nazionale, migliorando i modelli predittivi e il benchmarking per tutti i comuni.</div></div></div>
+              <div class="bm-acc-feat"><div class="bm-acc-feat-icon">📍</div><div><div class="bm-acc-feat-title">Categorizzazione automatica</div><div class="bm-acc-feat-desc">Le segnalazioni vengono classificate automaticamente per tipo (buche, rifiuti, illuminazione, ecc.) tramite modelli NLP.</div></div></div>
+            </div>
           </div>
         </div>
 
         <!-- STARTER -->
-        <div class="bm-plan-h">
-          <div class="bm-plan-h-left">
-            <div class="bm-plan-h-badge">Starter</div>
-            <div class="bm-plan-h-name">Comuni con 5<br>a 20 mila abitanti</div>
-            <div class="bm-plan-h-target">Comuni piccoli e medi</div>
+        <div class="bm-acc" id="acc-starter">
+          <div class="bm-acc-header" onclick="toggleAcc('acc-starter')">
+            <div class="bm-acc-left">
+              <div class="bm-acc-badge">Starter</div>
+              <div class="bm-acc-name">Comuni con 5<br>a 20 mila abitanti</div>
+              <div class="bm-acc-target">Comuni piccoli e medi</div>
+            </div>
+            <div class="bm-acc-price-wrap">
+              <div class="bm-acc-price">€199</div>
+              <div class="bm-acc-period">al mese</div>
+            </div>
+            <div class="bm-acc-summary">
+              <div class="bm-acc-tag"><span class="bm-acc-tag-check">✓</span> Dashboard PA base</div>
+              <div class="bm-acc-tag"><span class="bm-acc-tag-check">✓</span> Report mensile</div>
+              <div class="bm-acc-tag"><span class="bm-acc-tag-check">✓</span> Export CSV</div>
+            </div>
+            <div class="bm-acc-chevron"><svg width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1L6 6L11 1" stroke="#86868b" stroke-width="1.8" stroke-linecap="round"/></svg></div>
           </div>
-          <div class="bm-plan-h-price-wrap">
-            <div class="bm-plan-h-price">€199</div>
-            <div class="bm-plan-h-period">al mese</div>
-          </div>
-          <div class="bm-plan-h-feats">
-            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Dashboard PA base</div>
-            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Mappa segnalazioni</div>
-            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Report mensile automatico</div>
-            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Supporto email</div>
+          <div class="bm-acc-body">
+            <div class="bm-acc-body-inner">
+              <div class="bm-acc-feat"><div class="bm-acc-feat-icon">📊</div><div><div class="bm-acc-feat-title">Dashboard PA base</div><div class="bm-acc-feat-desc">Pannello di controllo per gli uffici comunali con vista aggregata delle segnalazioni, stato di avanzamento e categorie principali.</div></div></div>
+              <div class="bm-acc-feat"><div class="bm-acc-feat-icon">📥</div><div><div class="bm-acc-feat-title">Export CSV</div><div class="bm-acc-feat-desc">Download dei dati in formato CSV per elaborazioni interne, integrazione con fogli di calcolo o rendicontazioni PNRR.</div></div></div>
+              <div class="bm-acc-feat"><div class="bm-acc-feat-icon">📋</div><div><div class="bm-acc-feat-title">Report mensile automatico</div><div class="bm-acc-feat-desc">Documento generato automaticamente ogni mese con le priorità di intervento, le tendenze e un riepilogo delle segnalazioni risolte.</div></div></div>
+              <div class="bm-acc-feat"><div class="bm-acc-feat-icon">✉️</div><div><div class="bm-acc-feat-title">Supporto email dedicato</div><div class="bm-acc-feat-desc">Assistenza via email con risposta garantita entro 48 ore lavorative per configurazione, dubbi e onboarding iniziale.</div></div></div>
+            </div>
           </div>
         </div>
 
         <!-- GO — FEATURED -->
-        <div class="bm-plan-h featured-h">
-          <div class="bm-plan-h-left">
-            <div class="bm-plan-h-badge">Go <span class="bm-go-label">⭐ Piano di punta</span></div>
-            <div class="bm-plan-h-name">Comuni con 20<br>a 50 mila abitanti</div>
-            <div class="bm-plan-h-target">La spina dorsale dei ricavi</div>
+        <div class="bm-acc featured-h" id="acc-go">
+          <div class="bm-acc-header" onclick="toggleAcc('acc-go')">
+            <div class="bm-acc-left">
+              <div class="bm-acc-badge">Go <span class="bm-go-label">⭐ Piano di punta</span></div>
+              <div class="bm-acc-name">Comuni con 20<br>a 50 mila abitanti</div>
+              <div class="bm-acc-target">La spina dorsale dei ricavi</div>
+            </div>
+            <div class="bm-acc-price-wrap">
+              <div class="bm-acc-price">€299</div>
+              <div class="bm-acc-period">al mese</div>
+            </div>
+            <div class="bm-acc-summary">
+              <div class="bm-acc-tag"><span class="bm-acc-tag-check">✓</span> Dashboard completa</div>
+              <div class="bm-acc-tag"><span class="bm-acc-tag-check">✓</span> Analytics avanzata</div>
+              <div class="bm-acc-tag"><span class="bm-acc-tag-check">✓</span> Moduli opzionali</div>
+            </div>
+            <div class="bm-acc-chevron"><svg width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1L6 6L11 1" stroke="rgba(255,255,255,0.8)" stroke-width="1.8" stroke-linecap="round"/></svg></div>
           </div>
-          <div class="bm-plan-h-price-wrap">
-            <div class="bm-plan-h-price">€299</div>
-            <div class="bm-plan-h-period">al mese</div>
-          </div>
-          <div class="bm-plan-h-feats">
-            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Dashboard PA completa</div>
-            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Export CSV e report mensile</div>
-            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Supporto email dedicato</div>
-            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Moduli opzionali</div>
+          <div class="bm-acc-body">
+            <div class="bm-acc-body-inner">
+              <div class="bm-acc-feat"><div class="bm-acc-feat-icon">📊</div><div><div class="bm-acc-feat-title">Dashboard PA completa</div><div class="bm-acc-feat-desc">Tutti i dati del territorio in un unico cruscotto: mappe di calore, trend settimanali, filtri per categoria, quartiere e stato di risoluzione.</div></div></div>
+              <div class="bm-acc-feat"><div class="bm-acc-feat-icon">📈</div><div><div class="bm-acc-feat-title">Analytics avanzata</div><div class="bm-acc-feat-desc">Analisi delle tendenze nel tempo, identificazione delle zone critiche ricorrenti e correlazione tra tipologie di problemi.</div></div></div>
+              <div class="bm-acc-feat"><div class="bm-acc-feat-icon">📥</div><div><div class="bm-acc-feat-title">Export CSV e report mensile</div><div class="bm-acc-feat-desc">Dati esportabili in qualsiasi momento e report automatico mensile con priorità di intervento e metriche di performance.</div></div></div>
+              <div class="bm-acc-feat"><div class="bm-acc-feat-icon">🧩</div><div><div class="bm-acc-feat-title">Accesso ai moduli opzionali</div><div class="bm-acc-feat-desc">Il piano Go è compatibile con tutti i moduli aggiuntivi: predittivo, comunicazione cittadini, integrazione e report annuale.</div></div></div>
+              <div class="bm-acc-feat"><div class="bm-acc-feat-icon">✉️</div><div><div class="bm-acc-feat-title">Supporto email dedicato</div><div class="bm-acc-feat-desc">Assistenza con tempi di risposta prioritari e accesso a un referente per l'onboarding iniziale e la configurazione.</div></div></div>
+              <div class="bm-acc-feat"><div class="bm-acc-feat-icon">🏆</div><div><div class="bm-acc-feat-title">Benchmarking inter-comunale</div><div class="bm-acc-feat-desc">Confronto delle performance con comuni simili per dimensione e regione — disponibile dalla fase di scala (2027).</div></div></div>
+            </div>
           </div>
         </div>
 
         <!-- PLUS -->
-        <div class="bm-plan-h">
-          <div class="bm-plan-h-left">
-            <div class="bm-plan-h-badge">Plus</div>
-            <div class="bm-plan-h-name">Comuni con 50<br>a 250 mila abitanti</div>
-            <div class="bm-plan-h-target">Analytics avanzata</div>
+        <div class="bm-acc" id="acc-plus">
+          <div class="bm-acc-header" onclick="toggleAcc('acc-plus')">
+            <div class="bm-acc-left">
+              <div class="bm-acc-badge">Plus</div>
+              <div class="bm-acc-name">Comuni con 50<br>a 250 mila abitanti</div>
+              <div class="bm-acc-target">Analytics predittiva</div>
+            </div>
+            <div class="bm-acc-price-wrap">
+              <div class="bm-acc-price">€799</div>
+              <div class="bm-acc-period">al mese</div>
+            </div>
+            <div class="bm-acc-summary">
+              <div class="bm-acc-tag"><span class="bm-acc-tag-check">✓</span> AI predittiva</div>
+              <div class="bm-acc-tag"><span class="bm-acc-tag-check">✓</span> API integrazione</div>
+              <div class="bm-acc-tag"><span class="bm-acc-tag-check">✓</span> SLA garantito</div>
+            </div>
+            <div class="bm-acc-chevron"><svg width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1L6 6L11 1" stroke="#86868b" stroke-width="1.8" stroke-linecap="round"/></svg></div>
           </div>
-          <div class="bm-plan-h-price-wrap">
-            <div class="bm-plan-h-price">€799</div>
-            <div class="bm-plan-h-period">al mese</div>
-          </div>
-          <div class="bm-plan-h-feats">
-            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Analytics predittiva avanzata</div>
-            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> API di integrazione</div>
-            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> SLA garantito</div>
-            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Onboarding dedicato</div>
+          <div class="bm-acc-body">
+            <div class="bm-acc-body-inner">
+              <div class="bm-acc-feat"><div class="bm-acc-feat-icon">🤖</div><div><div class="bm-acc-feat-title">Analytics predittiva avanzata</div><div class="bm-acc-feat-desc">Il sistema identifica le aree a rischio prima che i problemi diventino critici, basandosi su pattern storici e dati stagionali.</div></div></div>
+              <div class="bm-acc-feat"><div class="bm-acc-feat-icon">🔗</div><div><div class="bm-acc-feat-title">API di integrazione</div><div class="bm-acc-feat-desc">Connessione con i sistemi informatici già in uso nel comune: gestionali, ticketing, CRM. Documentazione tecnica completa inclusa.</div></div></div>
+              <div class="bm-acc-feat"><div class="bm-acc-feat-icon">🛡</div><div><div class="bm-acc-feat-title">SLA garantito</div><div class="bm-acc-feat-desc">Accordo di livello di servizio con uptime minimo garantito, tempi di risposta definiti e penali contrattuali in caso di disservizio.</div></div></div>
+              <div class="bm-acc-feat"><div class="bm-acc-feat-icon">🚀</div><div><div class="bm-acc-feat-title">Onboarding dedicato</div><div class="bm-acc-feat-desc">Percorso di attivazione guidato con sessioni di formazione per il personale comunale e configurazione personalizzata della piattaforma.</div></div></div>
+            </div>
           </div>
         </div>
 
         <!-- ENTERPRISE -->
-        <div class="bm-plan-h">
-          <div class="bm-plan-h-left">
-            <div class="bm-plan-h-badge">Enterprise</div>
-            <div class="bm-plan-h-name">Comuni con oltre<br>250 mila abitanti</div>
-            <div class="bm-plan-h-target">Città metropolitane</div>
+        <div class="bm-acc" id="acc-enterprise">
+          <div class="bm-acc-header" onclick="toggleAcc('acc-enterprise')">
+            <div class="bm-acc-left">
+              <div class="bm-acc-badge">Enterprise</div>
+              <div class="bm-acc-name">Comuni con oltre<br>250 mila abitanti</div>
+              <div class="bm-acc-target">Città metropolitane</div>
+            </div>
+            <div class="bm-acc-price-wrap">
+              <div class="bm-acc-price" style="font-size:26px;">Da €2.000</div>
+              <div class="bm-acc-period">al mese — su misura</div>
+            </div>
+            <div class="bm-acc-summary">
+              <div class="bm-acc-tag"><span class="bm-acc-tag-check">✓</span> White-label</div>
+              <div class="bm-acc-tag"><span class="bm-acc-tag-check">✓</span> Integrazione CRM/ERP</div>
+              <div class="bm-acc-tag"><span class="bm-acc-tag-check">✓</span> Account manager</div>
+            </div>
+            <div class="bm-acc-chevron"><svg width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1L6 6L11 1" stroke="#86868b" stroke-width="1.8" stroke-linecap="round"/></svg></div>
           </div>
-          <div class="bm-plan-h-price-wrap">
-            <div class="bm-plan-h-price" style="font-size:26px;">Da €2.000</div>
-            <div class="bm-plan-h-period">al mese — su misura</div>
-          </div>
-          <div class="bm-plan-h-feats">
-            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> White-label completo</div>
-            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Integrazione CRM/ERP comunali</div>
-            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Account manager dedicato</div>
-            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> SLA personalizzato</div>
+          <div class="bm-acc-body">
+            <div class="bm-acc-body-inner">
+              <div class="bm-acc-feat"><div class="bm-acc-feat-icon">🏷</div><div><div class="bm-acc-feat-title">White-label completo</div><div class="bm-acc-feat-desc">La piattaforma viene brandizzata con il logo e i colori del comune. App e dashboard appaiono come strumenti proprietari dell'amministrazione.</div></div></div>
+              <div class="bm-acc-feat"><div class="bm-acc-feat-icon">⚙️</div><div><div class="bm-acc-feat-title">Integrazione CRM/ERP comunali</div><div class="bm-acc-feat-desc">Connettori personalizzati verso i sistemi gestionali esistenti del comune: anagrafe, lavori pubblici, ticketing interno e software di rendicontazione.</div></div></div>
+              <div class="bm-acc-feat"><div class="bm-acc-feat-icon">👤</div><div><div class="bm-acc-feat-title">Account manager dedicato</div><div class="bm-acc-feat-desc">Un referente Urbania segue il comune in ogni fase: configurazione, aggiornamenti, rinnovi e richieste straordinarie.</div></div></div>
+              <div class="bm-acc-feat"><div class="bm-acc-feat-icon">📜</div><div><div class="bm-acc-feat-title">SLA personalizzato</div><div class="bm-acc-feat-desc">Contratto di servizio negoziato in base alle esigenze specifiche: uptime, tempi di risposta, backup, disaster recovery e conformità normativa.</div></div></div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div style="margin-top:24px; background:var(--gray-50); border:1px solid var(--gray-100); border-radius:18px; padding:28px 32px;">
-        <div style="font-size:14px; font-weight:600; margin-bottom:16px; color:var(--gray-700);">Moduli aggiuntivi acquistabili separatamente</div>
-        <div style="display:flex; flex-wrap:wrap; gap:12px;">
-          <div style="background:#fff; border:1px solid var(--gray-100); border-radius:12px; padding:12px 18px; font-size:14px;"><strong>🔮 Modulo Predittivo</strong> — +€200/mese</div>
-          <div style="background:#fff; border:1px solid var(--gray-100); border-radius:12px; padding:12px 18px; font-size:14px;"><strong>📣 Comunicazione Cittadini</strong> — +€100/mese</div>
-          <div style="background:#fff; border:1px solid var(--gray-100); border-radius:12px; padding:12px 18px; font-size:14px;"><strong>🔗 Modulo Integrazione</strong> — su preventivo</div>
-          <div style="background:#fff; border:1px solid var(--gray-100); border-radius:12px; padding:12px 18px; font-size:14px;"><strong>📄 Report Annuale Territoriale</strong> — +€500/anno</div>
+      <!-- MODULI AGGIUNTIVI — accordion -->
+      <div class="bm-modules-acc" id="acc-modules">
+        <div class="bm-modules-header" onclick="toggleAcc('acc-modules')">
+          <div>
+            <div class="bm-modules-title">Moduli aggiuntivi acquistabili separatamente</div>
+            <div class="bm-modules-sub">Espandi le funzionalità del tuo piano con moduli opzionali</div>
+          </div>
+          <div class="bm-acc-chevron"><svg width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1L6 6L11 1" stroke="#86868b" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="bm-modules-body">
+          <div class="bm-modules-grid">
+            <div class="bm-module-card">
+              <div class="bm-module-icon">🔮</div>
+              <div>
+                <div class="bm-module-name">Modulo Predittivo</div>
+                <div class="bm-module-price">+€200/mese</div>
+                <div class="bm-module-desc">Alert automatici sulle aree a rischio prima che i problemi diventino critici. Il sistema analizza i pattern storici delle segnalazioni e segnala proattivamente le zone che necessitano attenzione nella settimana successiva.</div>
+              </div>
+            </div>
+            <div class="bm-module-card">
+              <div class="bm-module-icon">📣</div>
+              <div>
+                <div class="bm-module-name">Comunicazione Cittadini</div>
+                <div class="bm-module-price">+€100/mese</div>
+                <div class="bm-module-desc">Notifiche push automatiche agli utenti che hanno effettuato una segnalazione: aggiornamenti sullo stato di avanzamento, conferma di presa in carico e notifica di risoluzione. Aumenta la fiducia civica e riduce le segnalazioni duplicate.</div>
+              </div>
+            </div>
+            <div class="bm-module-card">
+              <div class="bm-module-icon">🔗</div>
+              <div>
+                <div class="bm-module-name">Modulo Integrazione</div>
+                <div class="bm-module-price">Su preventivo</div>
+                <div class="bm-module-desc">Connettori personalizzati verso i sistemi di ticketing comunale già in uso (es. Maggioli, TeamSystem, soluzioni proprietarie). Permette di sincronizzare automaticamente le segnalazioni Urbania con i flussi di lavoro interni esistenti.</div>
+              </div>
+            </div>
+            <div class="bm-module-card">
+              <div class="bm-module-icon">📄</div>
+              <div>
+                <div class="bm-module-name">Report Annuale Territoriale</div>
+                <div class="bm-module-price">+€500/anno</div>
+                <div class="bm-module-desc">Analisi approfondita su base annua del territorio comunale: trend per categoria, evoluzione nel tempo, confronto con l'anno precedente e raccomandazioni operative. Consegnato in formato PDF e PowerPoint, pronto per presentazioni istituzionali.</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
+      <script>
+        function toggleAcc(id) {
+          const el = document.getElementById(id);
+          const isOpen = el.classList.contains('open');
+          el.classList.toggle('open', !isOpen);
+        }
+      </script>
     </div>
 
     <!-- ── 3. CANALI E TOUCHPOINT ── -->
