@@ -284,12 +284,12 @@
 
   .index-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(6, 1fr);
     gap: 1px;
     background: var(--gray-100);
     border-radius: 18px;
     overflow: hidden;
-    max-width: 1000px;
+    max-width: 1200px;
     width: 100%;
     border: 1px solid var(--gray-100);
   }
@@ -793,9 +793,10 @@
   <ul class="nav-links">
     <li><a href="#problema">Il Problema</a></li>
     <li><a href="#funzionamento">Come Funziona</a></li>
-    <li><a href="#aggregazione">Aggregazione</a></li>
-    <li><a href="#pa">Per le PA</a></li>
-    <li><a href="#obiettivo">Obiettivo</a></li>
+    <li><a href="#business-model">Business Model</a></li>
+    <li><a href="#scelta-cloud">Scelta del Cloud</a></li>
+    <li><a href="#workflow">Work Flow</a></li>
+    <li><a href="#pa">PA</a></li>
   </ul>
   <button class="nav-cta" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Scopri di più</button>
 </nav>
@@ -865,28 +866,33 @@
   <div class="index-grid">
     <a href="#problema" class="index-item">
       <div class="index-num">01</div>
-      <div class="index-title">La presenza del problema</div>
+      <div class="index-title">Il Problema</div>
       <div class="index-desc">Le città italiane generano ogni giorno migliaia di segnalazioni disperse.</div>
     </a>
     <a href="#funzionamento" class="index-item">
       <div class="index-num">02</div>
-      <div class="index-title">Come funziona Urbania</div>
+      <div class="index-title">Come Funziona</div>
       <div class="index-desc">Geolocalizzazione, categorie e urgenza per ogni segnalazione.</div>
     </a>
-    <a href="#aggregazione" class="index-item">
+    <a href="#business-model" class="index-item">
       <div class="index-num">03</div>
-      <div class="index-title">Aggregazione dei dati</div>
-      <div class="index-desc">Più segnalazioni dello stesso problema si unificano automaticamente.</div>
+      <div class="index-title">Business Model</div>
+      <div class="index-desc">Abbonamento scalabile per comuni di ogni dimensione.</div>
+    </a>
+    <a href="#scelta-cloud" class="index-item">
+      <div class="index-num">04</div>
+      <div class="index-title">Scelta del Cloud</div>
+      <div class="index-desc">Infrastruttura AWS progettata per scalare con la crescita.</div>
+    </a>
+    <a href="#workflow" class="index-item">
+      <div class="index-num">05</div>
+      <div class="index-title">Work Flow</div>
+      <div class="index-desc">Dal cittadino al comune: il flusso completo di ogni segnalazione.</div>
     </a>
     <a href="#pa" class="index-item">
-      <div class="index-num">04</div>
-      <div class="index-title">Supporto alle PA</div>
+      <div class="index-num">06</div>
+      <div class="index-title">PA</div>
       <div class="index-desc">I Comuni accedono a un cruscotto priorità basato su dati reali.</div>
-    </a>
-    <a href="#obiettivo" class="index-item">
-      <div class="index-num">05</div>
-      <div class="index-title">L'obiettivo finale</div>
-      <div class="index-desc">Un sistema di intelligenza civica scalabile e misurabile.</div>
     </a>
   </div>
 </div>
@@ -1017,84 +1023,638 @@
 
 <div class="divider"></div>
 
-<!-- 03 AGGREGAZIONE -->
-<section id="aggregazione" style="background:#fff; min-height:auto; padding:0;">
-  <div class="content-section reveal">
-    <p class="section-eyebrow">03 — Aggregazione</p>
-    <div class="agg-layout">
-      <div class="signal-stack">
-        <div class="signal-row">
-          <div class="signal-avatar" style="background:#0071e3;">MR</div>
-          <div class="signal-info">
-            <div class="signal-name">Marco R. segnala</div>
-            <div class="signal-meta">Buca via Garibaldi — urgenza 3/5</div>
+<!-- 03 BUSINESS MODEL -->
+<style>
+  /* ── BM: Pricing table ── */
+  .bm-pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 56px;
+  }
+  .bm-plan {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-100);
+    border-radius: 22px;
+    padding: 32px 28px;
+    position: relative;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .bm-plan:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 48px rgba(0,0,0,0.09);
+  }
+  .bm-plan.featured {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: #fff;
+  }
+  .bm-plan-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--blue-light);
+    color: var(--blue);
+    border-radius: 980px;
+    padding: 4px 12px;
+    margin-bottom: 20px;
+  }
+  .bm-plan.featured .bm-plan-badge {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+  }
+  .bm-plan-name { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 6px; }
+  .bm-plan-target { font-size: 13px; color: var(--gray-400); margin-bottom: 24px; }
+  .bm-plan.featured .bm-plan-target { color: rgba(255,255,255,0.7); }
+  .bm-plan-price { font-size: 38px; font-weight: 700; letter-spacing: -1.5px; line-height: 1; margin-bottom: 4px; }
+  .bm-plan-period { font-size: 13px; color: var(--gray-400); margin-bottom: 28px; }
+  .bm-plan.featured .bm-plan-period { color: rgba(255,255,255,0.65); }
+  .bm-plan-features { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .bm-plan-features li { font-size: 14px; color: #444; display: flex; gap: 8px; align-items: flex-start; }
+  .bm-plan.featured .bm-plan-features li { color: rgba(255,255,255,0.85); }
+  .bm-feat-check { color: var(--green); font-weight: 700; flex-shrink: 0; }
+  .bm-plan.featured .bm-feat-check { color: #a8ffbe; }
+
+  /* ── BM: Revenue blocks ── */
+  .bm-revenue-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: start;
+    margin-top: 80px;
+  }
+  .bm-revenue-label {
+    font-size: 13px; font-weight: 500; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--blue); margin-bottom: 20px;
+  }
+  .bm-revenue-title { font-size: 28px; font-weight: 700; letter-spacing: -0.8px; line-height: 1.2; margin-bottom: 16px; }
+  .bm-revenue-body { font-size: 15px; color: #555; line-height: 1.65; }
+  .bm-mrr-block {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-100);
+    border-radius: 22px;
+    padding: 36px 32px;
+  }
+  .bm-mrr-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--gray-100); }
+  .bm-mrr-row:last-child { border-bottom: none; }
+  .bm-mrr-label { font-size: 14px; color: #444; }
+  .bm-mrr-val { font-size: 15px; font-weight: 600; }
+  .bm-mrr-total {
+    margin-top: 20px; background: var(--gray-700); color: #fff;
+    border-radius: 14px; padding: 20px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .bm-mrr-total-label { font-size: 13px; opacity: 0.7; }
+  .bm-mrr-total-val { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
+
+  /* ── BM: Channels ── */
+  .bm-channels-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 48px;
+  }
+  .bm-channel-card {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-100);
+    border-radius: 18px;
+    padding: 28px 24px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .bm-channel-card:hover { border-color: var(--blue); background: var(--blue-light); }
+  .bm-channel-icon { font-size: 28px; margin-bottom: 14px; }
+  .bm-channel-title { font-size: 17px; font-weight: 600; letter-spacing: -0.3px; margin-bottom: 8px; }
+  .bm-channel-body { font-size: 14px; color: var(--gray-400); line-height: 1.55; }
+  .bm-channel-tag {
+    display: inline-block; margin-top: 14px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.05em;
+    text-transform: uppercase; color: var(--blue);
+    background: var(--blue-light); border-radius: 980px;
+    padding: 3px 10px;
+  }
+
+  /* ── BM: Roadmap timeline ── */
+  .bm-timeline {
+    position: relative;
+    margin-top: 56px;
+    padding-left: 32px;
+  }
+  .bm-timeline::before {
+    content: '';
+    position: absolute;
+    left: 9px; top: 12px; bottom: 12px;
+    width: 2px; background: var(--gray-100);
+  }
+  .bm-tl-item { position: relative; margin-bottom: 40px; }
+  .bm-tl-dot {
+    position: absolute;
+    left: -28px; top: 4px;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--blue);
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px var(--blue);
+  }
+  .bm-tl-year {
+    font-size: 13px; font-weight: 600; letter-spacing: 0.05em;
+    text-transform: uppercase; color: var(--blue); margin-bottom: 6px;
+  }
+  .bm-tl-title { font-size: 20px; font-weight: 700; letter-spacing: -0.4px; margin-bottom: 8px; }
+  .bm-tl-body { font-size: 15px; color: #555; line-height: 1.6; }
+  .bm-tl-kpi {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 12px; background: var(--gray-50);
+    border: 1px solid var(--gray-100); border-radius: 980px;
+    padding: 6px 16px; font-size: 13px; font-weight: 500; color: var(--gray-700);
+  }
+  .bm-tl-kpi-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
+
+  /* ── BM: Risk table ── */
+  .bm-risk-list { margin-top: 48px; display: flex; flex-direction: column; gap: 12px; }
+  .bm-risk-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 2fr;
+    gap: 16px;
+    align-items: start;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-100);
+    border-radius: 16px;
+    padding: 20px 24px;
+    transition: border-color 0.2s;
+  }
+  .bm-risk-row:hover { border-color: var(--gray-400); }
+  .bm-risk-name { font-size: 15px; font-weight: 600; line-height: 1.4; }
+  .bm-risk-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 600; border-radius: 980px;
+    padding: 4px 12px; white-space: nowrap;
+  }
+  .badge-high { background: #fce8e8; color: #c0392b; }
+  .badge-mid  { background: #fff3cd; color: #b8860b; }
+  .badge-low  { background: #e3f8ee; color: #1a7a40; }
+  .bm-risk-mit { font-size: 14px; color: #555; line-height: 1.55; }
+
+  /* ── BM: Benchmarking block ── */
+  .bm-bench-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+    margin-top: 56px;
+  }
+  .bm-bench-card {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-100);
+    border-radius: 22px;
+    padding: 36px 32px;
+  }
+  .bm-bench-stat {
+    display: flex; align-items: flex-end; gap: 6px;
+    margin-bottom: 6px;
+  }
+  .bm-bench-big { font-size: 52px; font-weight: 700; letter-spacing: -2px; line-height: 1; color: var(--blue); }
+  .bm-bench-unit { font-size: 18px; font-weight: 500; color: var(--gray-400); padding-bottom: 8px; }
+  .bm-bench-desc { font-size: 14px; color: var(--gray-400); line-height: 1.5; }
+  .bm-compare-bars { display: flex; flex-direction: column; gap: 14px; }
+  .bm-compare-row { display: flex; flex-direction: column; gap: 6px; }
+  .bm-compare-label { display: flex; justify-content: space-between; font-size: 13px; }
+  .bm-compare-label span:first-child { font-weight: 500; }
+  .bm-compare-label span:last-child { color: var(--gray-400); }
+  .bm-compare-track { height: 8px; background: var(--gray-100); border-radius: 4px; overflow: hidden; }
+  .bm-compare-fill { height: 100%; border-radius: 4px; transition: width 1s ease; }
+
+  @media (max-width: 768px) {
+    .bm-pricing-grid { grid-template-columns: 1fr 1fr; }
+    .bm-revenue-row, .bm-bench-grid { grid-template-columns: 1fr; }
+    .bm-channels-grid { grid-template-columns: 1fr; }
+    .bm-risk-row { grid-template-columns: 1fr; }
+  }
+</style>
+
+<section id="business-model" style="background:#fff; min-height:auto; padding:0;">
+  <div class="content-section">
+    <p class="section-eyebrow">03 — Business Model</p>
+    <h2 class="section-title">Un modello semplice,<br>scalabile per ogni comune.</h2>
+    <p class="section-body">Urbania adotta un modello SaaS B2G — abbonamento mensile calibrato sulla dimensione del comune. La logica è duale: i comuni grandi pagano e finanziano la piattaforma; i comuni piccoli accedono gratuitamente, ampliano la copertura geografica e aumentano il valore del dataset complessivo per tutti.</p>
+
+    <!-- ── 1. BENCHMARKING & ADVANCED ANALYTICS ── -->
+    <div style="margin-top: 96px;">
+      <p class="bm-revenue-label">Benchmarking & Advanced Analytics</p>
+      <h3 style="font-size:32px; font-weight:700; letter-spacing:-1px; line-height:1.15; margin-bottom:20px; max-width:560px;">Anche i comuni più piccoli generano dati preziosi.</h3>
+      <p class="section-body" style="max-width:640px;">I comuni sotto i 5.000 abitanti accedono gratuitamente alla piattaforma. Non è una concessione: è una scelta strategica. Ogni comune free contribuisce al dataset aggregato, rendendo l'analisi comparativa più accurata e il modello predittivo più potente per tutti gli altri. Il benchmarking inter-comunale — disponibile dal 2027 — permetterà a ogni amministrazione di misurare la propria efficienza rispetto a realtà analoghe per dimensione, regione e tipologia di territorio. Un incentivo concreto all'adozione: nessun comune vorrà restare fuori dalla classifica quando tutti i suoi vicini ci sono già.</p>
+      <div class="bm-bench-grid">
+        <div>
+          <div class="bm-bench-card" style="margin-bottom:16px;">
+            <div class="bm-bench-stat">
+              <div class="bm-bench-big">7.100</div>
+            </div>
+            <div class="bm-bench-desc">comuni sotto i 5.000 abitanti in Italia — tutti potenziali nodi gratuiti del dataset</div>
           </div>
-          <div class="signal-dots">
-            <div class="signal-dot" style="background:#30d158;"></div>
-            <div class="signal-dot" style="background:#30d158;"></div>
-            <div class="signal-dot" style="background:#ffcc00;"></div>
-            <div class="signal-dot" style="background:#e0e0e5;"></div>
-            <div class="signal-dot" style="background:#e0e0e5;"></div>
+          <div class="bm-bench-card">
+            <div class="bm-bench-stat">
+              <div class="bm-bench-big" style="color:var(--green);">+</div>
+              <div style="font-size:22px; font-weight:700; color:var(--gray-700); padding-bottom:6px;">valore per ogni comune</div>
+            </div>
+            <div class="bm-bench-desc">Più comuni aderiscono, più il modello predittivo diventa accurato — vantaggio cumulativo per tutti gli iscritti.</div>
           </div>
         </div>
-        <div class="signal-row">
-          <div class="signal-avatar" style="background:#bf5af2;">SL</div>
-          <div class="signal-info">
-            <div class="signal-name">Sara L. segnala</div>
-            <div class="signal-meta">Buca via Garibaldi — urgenza 5/5</div>
+        <div class="bm-bench-card">
+          <div style="font-size:15px; font-weight:600; margin-bottom:20px;">Confronto efficienza — comuni medi (simulazione)</div>
+          <div class="bm-compare-bars">
+            <div class="bm-compare-row">
+              <div class="bm-compare-label"><span>Comune A — Bergamo</span><span>92 / 100</span></div>
+              <div class="bm-compare-track"><div class="bm-compare-fill" style="width:92%; background:var(--green);"></div></div>
+            </div>
+            <div class="bm-compare-row">
+              <div class="bm-compare-label"><span>Comune B — Lecce</span><span>78 / 100</span></div>
+              <div class="bm-compare-track"><div class="bm-compare-fill" style="width:78%; background:var(--blue);"></div></div>
+            </div>
+            <div class="bm-compare-row">
+              <div class="bm-compare-label"><span>Comune C — Pisa</span><span>65 / 100</span></div>
+              <div class="bm-compare-track"><div class="bm-compare-fill" style="width:65%; background:var(--orange);"></div></div>
+            </div>
+            <div class="bm-compare-row">
+              <div class="bm-compare-label"><span>Il tuo comune</span><span>54 / 100</span></div>
+              <div class="bm-compare-track"><div class="bm-compare-fill" style="width:54%; background:var(--red);"></div></div>
+            </div>
           </div>
-          <div class="signal-dots">
-            <div class="signal-dot" style="background:#30d158;"></div>
-            <div class="signal-dot" style="background:#30d158;"></div>
-            <div class="signal-dot" style="background:#ffcc00;"></div>
-            <div class="signal-dot" style="background:#ff9f0a;"></div>
-            <div class="signal-dot" style="background:#ff453a;"></div>
-          </div>
+          <p style="font-size:12px; color:var(--gray-400); margin-top:16px;">Punteggio basato su: tempi di risposta, volume segnalazioni risolte, densità di copertura civica.</p>
         </div>
-        <div class="signal-row">
-          <div class="signal-avatar" style="background:#ff9f0a;">AL</div>
-          <div class="signal-info">
-            <div class="signal-name">Andrea L. segnala</div>
-            <div class="signal-meta">Buca via Garibaldi — urgenza 4/5</div>
-          </div>
-          <div class="signal-dots">
-            <div class="signal-dot" style="background:#30d158;"></div>
-            <div class="signal-dot" style="background:#30d158;"></div>
-            <div class="signal-dot" style="background:#ffcc00;"></div>
-            <div class="signal-dot" style="background:#ff9f0a;"></div>
-            <div class="signal-dot" style="background:#e0e0e5;"></div>
-          </div>
-        </div>
-        <div class="merge-arrow">⬇</div>
-        <div class="result-card">
-          <div class="result-icon">🔴</div>
-          <div>
-            <div class="result-title">Buca via Garibaldi — 3 segnalazioni</div>
-            <div class="result-sub">Urgenza media aggregata: 4.0 / 5 — Priorità alta</div>
-          </div>
-        </div>
-      </div>
-      <div>
-        <h2 class="section-title">Molte voci,<br>un dato chiaro.</h2>
-        <p class="section-body">Quando più cittadini segnalano lo stesso problema, il sistema lo riconosce e unifica le segnalazioni. La rilevanza cresce con il numero di persone coinvolte e con l'urgenza media attribuita.</p>
-        <br>
-        <p class="section-body">Il risultato è un indicatore affidabile della reale priorità del problema — non basato su una singola opinione, ma su dati aggregati, oggettivi e rappresentativi.</p>
       </div>
     </div>
+
+    <!-- ── 2. STRUTTURA E LOGICA DEI RICAVI ── -->
+    <div style="margin-top: 96px;">
+      <p class="bm-revenue-label">Struttura e logica dei ricavi</p>
+      <h3 style="font-size:32px; font-weight:700; letter-spacing:-1px; line-height:1.15; margin-bottom:20px; max-width:560px;">Quattro piani. Un principio: il valore cresce con la dimensione.</h3>
+      <p class="section-body" style="max-width:640px; margin-bottom:0;">Il prezzo scala con la complessità del comune. Ogni piano include esattamente ciò che serve a quella fascia — niente di meno, niente che non verrà usato.</p>
+
+      <style>
+        .bm-pricing-h { display: flex; flex-direction: column; gap: 12px; margin-top: 56px; }
+        .bm-plan-h {
+          display: grid;
+          grid-template-columns: 220px 140px 1fr;
+          align-items: center;
+          gap: 32px;
+          background: var(--gray-50);
+          border: 1px solid var(--gray-100);
+          border-radius: 20px;
+          padding: 24px 32px;
+          transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .bm-plan-h:hover { transform: translateX(4px); box-shadow: 0 8px 32px rgba(0,0,0,0.07); }
+        .bm-plan-h.featured-h {
+          background: var(--blue);
+          border-color: var(--blue);
+          color: #fff;
+        }
+        .bm-plan-h-left { display: flex; flex-direction: column; gap: 4px; }
+        .bm-plan-h-badge {
+          display: inline-block; font-size: 11px; font-weight: 600;
+          letter-spacing: 0.07em; text-transform: uppercase;
+          background: var(--blue-light); color: var(--blue);
+          border-radius: 980px; padding: 3px 12px;
+          width: fit-content; margin-bottom: 6px;
+        }
+        .featured-h .bm-plan-h-badge { background: rgba(255,255,255,0.22); color: #fff; }
+        .bm-plan-h-name { font-size: 19px; font-weight: 700; letter-spacing: -0.4px; line-height: 1.2; }
+        .bm-plan-h-target { font-size: 13px; color: var(--gray-400); margin-top: 2px; }
+        .featured-h .bm-plan-h-target { color: rgba(255,255,255,0.7); }
+        .bm-plan-h-price-wrap { text-align: center; }
+        .bm-plan-h-price { font-size: 36px; font-weight: 700; letter-spacing: -1.5px; line-height: 1; }
+        .bm-plan-h-period { font-size: 12px; color: var(--gray-400); margin-top: 4px; }
+        .featured-h .bm-plan-h-period { color: rgba(255,255,255,0.65); }
+        .bm-plan-h-feats { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+        .bm-plan-h-feat { font-size: 14px; color: #444; display: flex; align-items: center; gap: 6px; }
+        .featured-h .bm-plan-h-feat { color: rgba(255,255,255,0.9); }
+        .bm-plan-h-feat-check { color: var(--green); font-weight: 700; }
+        .featured-h .bm-plan-h-feat-check { color: #a8ffbe; }
+        .bm-go-label {
+          display: inline-flex; align-items: center; gap: 6px;
+          font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+          text-transform: uppercase; color: #fff;
+          background: rgba(255,255,255,0.18); border-radius: 980px;
+          padding: 3px 12px; margin-left: 10px; vertical-align: middle;
+        }
+        @media (max-width: 768px) {
+          .bm-plan-h { grid-template-columns: 1fr; }
+          .bm-plan-h-price-wrap { text-align: left; }
+        }
+      </style>
+
+      <div class="bm-pricing-h">
+        <!-- FREE -->
+        <div class="bm-plan-h">
+          <div class="bm-plan-h-left">
+            <div class="bm-plan-h-badge">Free</div>
+            <div class="bm-plan-h-name">Comuni con meno<br>di 5 mila abitanti</div>
+            <div class="bm-plan-h-target">Accesso base garantito</div>
+          </div>
+          <div class="bm-plan-h-price-wrap">
+            <div class="bm-plan-h-price">€0</div>
+            <div class="bm-plan-h-period">per sempre</div>
+          </div>
+          <div class="bm-plan-h-feats">
+            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Mappa pubblica delle segnalazioni</div>
+            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Priority score automatico</div>
+            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Contribuisce al dataset aggregato</div>
+          </div>
+        </div>
+
+        <!-- STARTER -->
+        <div class="bm-plan-h">
+          <div class="bm-plan-h-left">
+            <div class="bm-plan-h-badge">Starter</div>
+            <div class="bm-plan-h-name">Comuni con 5<br>a 20 mila abitanti</div>
+            <div class="bm-plan-h-target">Comuni piccoli e medi</div>
+          </div>
+          <div class="bm-plan-h-price-wrap">
+            <div class="bm-plan-h-price">€199</div>
+            <div class="bm-plan-h-period">al mese</div>
+          </div>
+          <div class="bm-plan-h-feats">
+            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Dashboard PA base</div>
+            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Mappa segnalazioni</div>
+            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Report mensile automatico</div>
+            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Supporto email</div>
+          </div>
+        </div>
+
+        <!-- GO — FEATURED -->
+        <div class="bm-plan-h featured-h">
+          <div class="bm-plan-h-left">
+            <div class="bm-plan-h-badge">Go <span class="bm-go-label">⭐ Piano di punta</span></div>
+            <div class="bm-plan-h-name">Comuni con 20<br>a 50 mila abitanti</div>
+            <div class="bm-plan-h-target">La spina dorsale dei ricavi</div>
+          </div>
+          <div class="bm-plan-h-price-wrap">
+            <div class="bm-plan-h-price">€299</div>
+            <div class="bm-plan-h-period">al mese</div>
+          </div>
+          <div class="bm-plan-h-feats">
+            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Dashboard PA completa</div>
+            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Export CSV e report mensile</div>
+            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Supporto email dedicato</div>
+            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Moduli opzionali</div>
+          </div>
+        </div>
+
+        <!-- PLUS -->
+        <div class="bm-plan-h">
+          <div class="bm-plan-h-left">
+            <div class="bm-plan-h-badge">Plus</div>
+            <div class="bm-plan-h-name">Comuni con 50<br>a 250 mila abitanti</div>
+            <div class="bm-plan-h-target">Analytics avanzata</div>
+          </div>
+          <div class="bm-plan-h-price-wrap">
+            <div class="bm-plan-h-price">€799</div>
+            <div class="bm-plan-h-period">al mese</div>
+          </div>
+          <div class="bm-plan-h-feats">
+            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Analytics predittiva avanzata</div>
+            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> API di integrazione</div>
+            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> SLA garantito</div>
+            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Onboarding dedicato</div>
+          </div>
+        </div>
+
+        <!-- ENTERPRISE -->
+        <div class="bm-plan-h">
+          <div class="bm-plan-h-left">
+            <div class="bm-plan-h-badge">Enterprise</div>
+            <div class="bm-plan-h-name">Comuni con oltre<br>250 mila abitanti</div>
+            <div class="bm-plan-h-target">Città metropolitane</div>
+          </div>
+          <div class="bm-plan-h-price-wrap">
+            <div class="bm-plan-h-price" style="font-size:26px;">Da €2.000</div>
+            <div class="bm-plan-h-period">al mese — su misura</div>
+          </div>
+          <div class="bm-plan-h-feats">
+            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> White-label completo</div>
+            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Integrazione CRM/ERP comunali</div>
+            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> Account manager dedicato</div>
+            <div class="bm-plan-h-feat"><span class="bm-plan-h-feat-check">✓</span> SLA personalizzato</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:24px; background:var(--gray-50); border:1px solid var(--gray-100); border-radius:18px; padding:28px 32px;">
+        <div style="font-size:14px; font-weight:600; margin-bottom:16px; color:var(--gray-700);">Moduli aggiuntivi acquistabili separatamente</div>
+        <div style="display:flex; flex-wrap:wrap; gap:12px;">
+          <div style="background:#fff; border:1px solid var(--gray-100); border-radius:12px; padding:12px 18px; font-size:14px;"><strong>🔮 Modulo Predittivo</strong> — +€200/mese</div>
+          <div style="background:#fff; border:1px solid var(--gray-100); border-radius:12px; padding:12px 18px; font-size:14px;"><strong>📣 Comunicazione Cittadini</strong> — +€100/mese</div>
+          <div style="background:#fff; border:1px solid var(--gray-100); border-radius:12px; padding:12px 18px; font-size:14px;"><strong>🔗 Modulo Integrazione</strong> — su preventivo</div>
+          <div style="background:#fff; border:1px solid var(--gray-100); border-radius:12px; padding:12px 18px; font-size:14px;"><strong>📄 Report Annuale Territoriale</strong> — +€500/anno</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 3. CANALI E TOUCHPOINT ── -->
+    <div style="margin-top: 96px;">
+      <p class="bm-revenue-label">Canali e touchpoint B2G</p>
+      <h3 style="font-size:32px; font-weight:700; letter-spacing:-1px; line-height:1.15; margin-bottom:20px; max-width:560px;">Vendere alla PA richiede credibilità prima dei contratti.</h3>
+      <p class="section-body" style="max-width:640px;">I comuni decidono lentamente, vogliono referenze e si fidano di chi conoscono. La strategia di acquisizione di Urbania è costruita su questa realtà — non per aggirarla, ma per lavorarci a favore.</p>
+      <div class="bm-channels-grid">
+        <div class="bm-channel-card">
+          <div class="bm-channel-icon">🤝</div>
+          <div class="bm-channel-title">Vendita diretta istituzionale</div>
+          <div class="bm-channel-body">Contatto diretto con sindaci, assessori all'innovazione e dirigenti tecnici. Il canale più efficace: richiede tempo, ma genera relazioni solide e contratti pluriennali.</div>
+          <div class="bm-channel-tag">Priorità alta</div>
+        </div>
+        <div class="bm-channel-card">
+          <div class="bm-channel-icon">🏛</div>
+          <div class="bm-channel-title">Forum PA & Smart City Expo</div>
+          <div class="bm-channel-body">I due eventi di riferimento per i decisori pubblici italiani. Presenza con casi studio documentati, non con presentazioni generiche. Budget: €5.000–10.000/anno.</div>
+          <div class="bm-channel-tag">Alto ROI</div>
+        </div>
+        <div class="bm-channel-card">
+          <div class="bm-channel-icon">🔗</div>
+          <div class="bm-channel-title">Partnership ANCI & Regioni</div>
+          <div class="bm-channel-body">Accordi con l'Associazione Nazionale Comuni Italiani e le associazioni regionali per presentazioni aggregate a network di comuni. Cicli lunghi, moltiplicatore alto.</div>
+          <div class="bm-channel-tag">Effetto rete</div>
+        </div>
+        <div class="bm-channel-card">
+          <div class="bm-channel-icon">⚙️</div>
+          <div class="bm-channel-title">System integrators</div>
+          <div class="bm-channel-body">Accordi di rivendita con aziende come Engineering, Reply, Var Group — già radicate nelle PA. Margine 15–20%. Canale scalabile senza struttura commerciale dedicata.</div>
+          <div class="bm-channel-tag">Scalabile</div>
+        </div>
+        <div class="bm-channel-card">
+          <div class="bm-channel-icon">💼</div>
+          <div class="bm-channel-title">Bandi PNRR & Horizon</div>
+          <div class="bm-channel-body">La Missione 1 del PNRR ha stanziato oltre €6 miliardi per la digitalizzazione della PA. I comuni cercano strumenti concreti da acquistare per rendicontare. Urbania è una risposta diretta.</div>
+          <div class="bm-channel-tag">Finanziamento non diluitivo</div>
+        </div>
+        <div class="bm-channel-card">
+          <div class="bm-channel-icon">📰</div>
+          <div class="bm-channel-title">PR & media specializzati</div>
+          <div class="bm-channel-body">PA Digitale, Agenda Digitale, ForumPA.it, Il Sole 24 Ore PA. Comunicati stampa basati sui dati aggregati dalla piattaforma: numeri reali che parlano da soli.</div>
+          <div class="bm-channel-tag">Credibilità</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 4. VISIONE ECONOMICA ANNO PER ANNO ── -->
+    <div style="margin-top: 96px;">
+      <p class="bm-revenue-label">Visione economica anno per anno</p>
+      <h3 style="font-size:32px; font-weight:700; letter-spacing:-1px; line-height:1.15; margin-bottom:20px; max-width:560px;">Ogni fase costruisce le fondamenta di quella successiva.</h3>
+      <p class="section-body" style="max-width:640px; margin-bottom:0;">Non è una lista di speranze: è una sequenza logica in cui credibilità, espansione e scala si alimentano a vicenda. Al secondo anno operativo, lo scenario conservativo stima un MRR di circa €41.000 e un ARR prossimo ai €500.000.</p>
+
+      <div class="bm-revenue-row" style="margin-top:48px; align-items:start;">
+        <div class="bm-timeline">
+          <div class="bm-tl-item">
+            <div class="bm-tl-dot"></div>
+            <div class="bm-tl-year">2025 — Fondamenta</div>
+            <div class="bm-tl-title">Credibilità prima delle vendite</div>
+            <div class="bm-tl-body">MVP completato, 2–3 pilota gratuiti in regioni diverse. Casi studio documentati presentati al Forum PA e a Smart City Expo. L'obiettivo non è vendere: è diventare un riferimento per i decisori pubblici italiani.</div>
+            <div class="bm-tl-kpi"><span class="bm-tl-kpi-dot"></span> MRR obiettivo: €5.000 – €10.000</div>
+          </div>
+          <div class="bm-tl-item">
+            <div class="bm-tl-dot"></div>
+            <div class="bm-tl-year">2026 — Espansione</div>
+            <div class="bm-tl-title">I casi studio aprono le porte</div>
+            <div class="bm-tl-body">I pilota diventano il principale strumento commerciale. Lancio del modulo predittivo AI. Prima partnership con un system integrator nazionale. L'effetto contagio territoriale porta i comuni vicini a quelli pilota ad adottare la piattaforma.</div>
+            <div class="bm-tl-kpi"><span class="bm-tl-kpi-dot"></span> MRR obiettivo: €20.000 – €35.000</div>
+          </div>
+          <div class="bm-tl-item">
+            <div class="bm-tl-dot"></div>
+            <div class="bm-tl-year">2027 — Scala</div>
+            <div class="bm-tl-title">Onboarding automatico e benchmarking</div>
+            <div class="bm-tl-body">Con 60–80 comuni attivi, l'onboarding per i piani base diventa completamente automatizzato. Lancio del modulo di confronto inter-comunale. Prime esplorazioni verso Spagna, Portogallo e Francia.</div>
+            <div class="bm-tl-kpi"><span class="bm-tl-kpi-dot"></span> ARR obiettivo: €500.000+</div>
+          </div>
+          <div class="bm-tl-item">
+            <div class="bm-tl-dot" style="background:var(--gray-400); box-shadow:0 0 0 2px var(--gray-400);"></div>
+            <div class="bm-tl-year">2028+ — Maturità</div>
+            <div class="bm-tl-title">L'infrastruttura dati urbana d'Italia</div>
+            <div class="bm-tl-body">Il dataset aggregato su centinaia di comuni diventa un asset unico: licensing del dato anonimizzato, report regionali su commissione, partnership con istituti di ricerca. Urbania non è più solo un SaaS — è l'infrastruttura di riferimento per la qualità urbana italiana.</div>
+            <div class="bm-tl-kpi" style="background:var(--gray-100); color:var(--gray-400);"><span class="bm-tl-kpi-dot" style="background:var(--gray-400);"></span> Valutazione Serie A o piena autonomia</div>
+          </div>
+        </div>
+
+        <div class="bm-mrr-block">
+          <div style="font-size:15px; font-weight:600; margin-bottom:20px;">Scenario conservativo — Anno 2</div>
+          <div class="bm-mrr-row">
+            <div class="bm-mrr-label">40 comuni Go × €299</div>
+            <div class="bm-mrr-val">€11.960</div>
+          </div>
+          <div class="bm-mrr-row">
+            <div class="bm-mrr-label">20 comuni Plus × €799</div>
+            <div class="bm-mrr-val">€15.980</div>
+          </div>
+          <div class="bm-mrr-row">
+            <div class="bm-mrr-label">4 comuni Enterprise × €2.000</div>
+            <div class="bm-mrr-val">€8.000</div>
+          </div>
+          <div class="bm-mrr-row">
+            <div class="bm-mrr-label">Moduli aggiuntivi (stima)</div>
+            <div class="bm-mrr-val">€5.000</div>
+          </div>
+          <div class="bm-mrr-total">
+            <div>
+              <div class="bm-mrr-total-label">MRR stimato</div>
+              <div class="bm-mrr-total-val">€40.940 / mese</div>
+            </div>
+            <div style="text-align:right;">
+              <div class="bm-mrr-total-label">ARR</div>
+              <div class="bm-mrr-total-val">~€491.000</div>
+            </div>
+          </div>
+          <div style="margin-top:20px; padding:16px 18px; background:var(--blue-light); border-radius:12px; font-size:13px; color:var(--blue); line-height:1.5;">
+            <strong>Break-even operativo</strong> raggiungibile con ~30–35 comuni paganti. Costi fissi mensili stimati: €20.000–€25.000 (team + infra + marketing).
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 5. VALUTAZIONE DEI RISCHI ── -->
+    <div style="margin-top: 96px;">
+      <p class="bm-revenue-label">Valutazione dei rischi</p>
+      <h3 style="font-size:32px; font-weight:700; letter-spacing:-1px; line-height:1.15; margin-bottom:20px; max-width:560px;">Ogni rischio ha una risposta. Non una speranza.</h3>
+      <p class="section-body" style="max-width:640px;">Il mercato B2G ha frizioni specifiche. Le abbiamo mappate e abbiamo costruito mitigazioni concrete per ciascuna — non generiche, ma integrate nella struttura stessa del prodotto e del modello commerciale.</p>
+      <div class="bm-risk-list">
+        <div class="bm-risk-row">
+          <div class="bm-risk-name">Adozione cittadini insufficiente</div>
+          <div><span class="bm-risk-badge badge-mid">⚠ Media / Alto</span></div>
+          <div class="bm-risk-mit">Campagne di comunicazione civica localizzate, partnership con associazioni di quartiere, incentivi alla partecipazione integrati nell'app.</div>
+        </div>
+        <div class="bm-risk-row">
+          <div class="bm-risk-name">Cicli di vendita PA molto lunghi</div>
+          <div><span class="bm-risk-badge badge-high">⚠ Alta / Alto</span></div>
+          <div class="bm-risk-mit">Pilota gratuiti per abbattere la barriera decisionale. Posizionamento come strumento complementare agli esistenti, non come sostituzione — riduce la percezione di rischio.</div>
+        </div>
+        <div class="bm-risk-row">
+          <div class="bm-risk-name">Dipendenza da AWS</div>
+          <div><span class="bm-risk-badge badge-low">✓ Bassa / Medio</span></div>
+          <div class="bm-risk-mit">Architettura containerizzata con Docker che consente migrazione. Valutazione multi-cloud prevista in fase di scaling.</div>
+        </div>
+        <div class="bm-risk-row">
+          <div class="bm-risk-name">Variabilità dei costi cloud</div>
+          <div><span class="bm-risk-badge badge-mid">⚠ Media / Medio</span></div>
+          <div class="bm-risk-mit">Monitoraggio continuo con AWS Cost Explorer. Pricing SaaS strutturato per coprire i costi marginali con margine adeguato a ogni fascia.</div>
+        </div>
+        <div class="bm-risk-row">
+          <div class="bm-risk-name">Concorrenza internazionale</div>
+          <div><span class="bm-risk-badge badge-low">✓ Bassa / Medio</span></div>
+          <div class="bm-risk-mit">FixMyStreet e SeeClickFix non hanno penetrazione significativa in Italia. Vantaggio localizzazione: lingua, normativa, integrazione con sistemi PA nazionali e supporto locale.</div>
+        </div>
+        <div class="bm-risk-row">
+          <div class="bm-risk-name">Privacy & GDPR</div>
+          <div><span class="bm-risk-badge badge-mid">⚠ Media / Alto</span></div>
+          <div class="bm-risk-mit">DPA firmato con ogni comune cliente, anonimizzazione dei dati utente, nomina DPO, audit annuale di conformità. Compliance by design, non retrofit.</div>
+        </div>
+        <div class="bm-risk-row">
+          <div class="bm-risk-name">Dipendenza dai fondi PNRR</div>
+          <div><span class="bm-risk-badge badge-low">✓ Media / Medio</span></div>
+          <div class="bm-risk-mit">Il modello di ricavi è autonomo e non dipende da sussidi. I bandi PNRR sono acceleratori commerciali, non prerequisiti di sopravvivenza.</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- 04 PA -->
-<section id="pa" style="min-height:auto; padding:0;">
+<!-- 04 SCELTA DEL CLOUD -->
+<section id="scelta-cloud" style="background:var(--gray-50); min-height:auto; padding:0;">
+  <div class="content-section reveal">
+    <p class="section-eyebrow">04 — Scelta del Cloud</p>
+    <h2 class="section-title">Infrastruttura pensata<br>per crescere.</h2>
+    <p class="section-body">La scelta del cloud permette a Urbania di nascere come piattaforma leggera, modulare e scalabile. In una prima fase è possibile costruire un MVP con pochi servizi essenziali, senza gestire server fisici e senza sostenere grandi investimenti iniziali. Se il progetto dimostra valore, l'architettura può crescere progressivamente, aggiungendo nuovi moduli per analisi dati, reportistica, dashboard amministrative e funzionalità AI.</p>
+    <br>
+    <p class="section-body">Allo stesso tempo, il cloud richiede attenzione. L'uso di servizi esterni comporta dipendenza dal provider, controllo continuo dei costi e una gestione rigorosa della sicurezza. Poiché Urbania tratta dati geolocalizzati e potenzialmente sensibili, l'architettura deve prevedere fin dall'inizio privacy, pseudonimizzazione, controllo degli accessi e protezione delle API.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 05 WORK FLOW -->
+<section id="workflow" style="background:#fff; min-height:auto; padding:0;">
+  <div class="content-section reveal">
+    <p class="section-eyebrow">05 — Work Flow</p>
+    <h2 class="section-title">Come funziona<br>ogni segnalazione.</h2>
+    <p class="section-body">Il cittadino segnala un problema urbano dall'app, indicando posizione, categoria, descrizione, urgenza ed eventuale foto. La segnalazione viene poi salvata, collegata alla mappa e confrontata con altre segnalazioni simili nella stessa area.</p>
+    <br>
+    <p class="section-body">Il sistema aggrega i problemi ricorrenti, raccoglie conferme dagli utenti e aggiorna un indice di priorità basato su urgenza, frequenza, persistenza e concentrazione geografica.</p>
+    <br>
+    <p class="section-body">I dati elaborati alimentano la dashboard per i Comuni e i report civici, trasformando le segnalazioni dei cittadini in informazioni utili per pianificare interventi pubblici. La componente AI supporta classificazione, sintesi e riconoscimento dei pattern, senza sostituire la decisione finale dell'amministrazione.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 06 PA -->
+<section id="pa" style="background:#000; min-height:auto; padding:0;">
   <div class="pa-inner reveal">
     <div>
-      <p class="section-eyebrow">04 — Supporto alle PA</p>
-      <h2 class="section-title">Dati per chi<br>deve decidere.</h2>
-      <p class="section-body">Le amministrazioni comunali accedono a un cruscotto dedicato che mostra le priorità urbane in forma già strutturata. Niente interpretazione soggettiva: i dati arrivano già organizzati per categoria, zona e urgenza.</p>
+      <p class="section-eyebrow" style="color:#6eb3f7;">06 — PA</p>
+      <h2 class="section-title" style="color:#fff;">Dati per chi<br>deve decidere.</h2>
+      <p class="section-body" style="color:#a1a1a6;">Per i Comuni aderenti, Urbania mette a disposizione una dashboard avanzata basata su business intelligence e advanced analytics.</p>
       <br>
-      <p class="section-body">Urbania diventa uno strumento di supporto decisionale basato sull'intelligenza collettiva dei cittadini.</p>
+      <p class="section-body" style="color:#a1a1a6;">La dashboard consente alle amministrazioni di superare la semplice gestione delle singole segnalazioni e di ottenere una visione strategica del territorio. I dati aggregati supportano la pianificazione degli interventi, l'individuazione dei problemi persistenti e il monitoraggio dell'evoluzione urbana, offrendo ai Comuni uno strumento concreto per prendere decisioni più rapide, informate e trasparenti.</p>
     </div>
     <div class="dashboard-mock">
       <div class="dash-header">
@@ -1138,18 +1698,6 @@
 </section>
 
 <div class="divider"></div>
-
-<!-- 05 OBIETTIVO -->
-<section id="obiettivo" style="background:#fff; min-height:auto; padding:0;">
-  <div class="obiettivo-inner reveal">
-    <p class="section-eyebrow" style="margin-bottom:24px;">05 — L'obiettivo</p>
-    <h2 class="big-statement">Trasformare osservazioni<br>individuali in <em>intelligenza collettiva</em>.</h2>
-    <p class="obiettivo-body">Urbania non è un social network. Non è uno sportello digitale. È un sistema di intelligenza civica: rende i problemi urbani visibili, misurabili e gestibili — trasformando la frammentazione in priorità condivise.</p>
-    <div class="hero-btns">
-      <button class="btn-primary" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Inizia ora</button>
-    </div>
-  </div>
-</section>
 
 <!-- CTA FOOTER -->
 <section id="cta">
