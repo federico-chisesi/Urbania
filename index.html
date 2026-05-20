@@ -812,41 +812,118 @@
   </div>
 
   <div class="hero-visual">
-    <div class="map-mock">
-      <div class="map-grid"></div>
-      <!-- Roads -->
-      <div class="map-road-h" style="top: 38%;"></div>
-      <div class="map-road-h" style="top: 68%;"></div>
-      <div class="map-road-v" style="left: 30%;"></div>
-      <div class="map-road-v" style="left: 62%;"></div>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <div id="urbania-map" style="width:100%; height:480px; border-radius:24px; overflow:hidden; border:1px solid var(--gray-100); box-shadow:0 8px 40px rgba(0,0,0,0.08);"></div>
+    <script>
+      window.addEventListener('load', function() {
+        var map = L.map('urbania-map', {
+          center: [45.464, 9.19],
+          zoom: 13,
+          zoomControl: true,
+          scrollWheelZoom: false,
+          attributionControl: true
+        });
 
-      <!-- Pins -->
-      <div class="map-pin" style="top: 22%; left: 24%; animation-delay: 1s;">
-        <div class="pin-dot" style="background:#ff453a;"><span>🕳</span></div>
-        <div class="pin-tooltip">Buca stradale — urgenza 4/5</div>
-        <div class="pin-label">Buca</div>
-      </div>
-      <div class="map-pin" style="top: 50%; left: 50%; animation-delay: 1.2s;">
-        <div class="pin-dot" style="background:#ff9f0a;"><span>🗑</span></div>
-        <div class="pin-tooltip">Rifiuti abbandonati — urgenza 3/5</div>
-        <div class="pin-label">Rifiuti</div>
-      </div>
-      <div class="map-pin" style="top: 30%; left: 68%; animation-delay: 1.4s;">
-        <div class="pin-dot" style="background:#0071e3;"><span>🚧</span></div>
-        <div class="pin-tooltip">Segnaletica mancante — urgenza 2/5</div>
-        <div class="pin-label">Segnaletica</div>
-      </div>
-      <div class="map-pin" style="top: 65%; left: 20%; animation-delay: 1.6s;">
-        <div class="pin-dot" style="background:#30d158;"><span>💡</span></div>
-        <div class="pin-tooltip">Illuminazione guasta — urgenza 5/5</div>
-        <div class="pin-label">Luce</div>
-      </div>
-      <div class="map-pin" style="top: 72%; left: 72%; animation-delay: 1.8s;">
-        <div class="pin-dot" style="background:#bf5af2;"><span>🔊</span></div>
-        <div class="pin-tooltip">Rumore eccessivo — urgenza 2/5</div>
-        <div class="pin-label">Rumore</div>
-      </div>
-    </div>
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+          tileSize: 256,
+          zoomOffset: 0,
+          detectRetina: true,
+          attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        function makeIcon(color, emoji) {
+          return L.divIcon({
+            className: '',
+            html: `<div style="
+              background:${color};
+              width:38px; height:38px;
+              border-radius:50% 50% 50% 0;
+              transform:rotate(-45deg);
+              display:flex; align-items:center; justify-content:center;
+              box-shadow:0 4px 16px rgba(0,0,0,0.28);
+              border:2.5px solid rgba(255,255,255,0.85);
+            "><span style="transform:rotate(45deg); font-size:17px; line-height:1;">${emoji}</span></div>`,
+            iconSize: [38, 38],
+            iconAnchor: [19, 38],
+            popupAnchor: [0, -42]
+          });
+        }
+
+        var pins = [
+          // Centro
+          { lat: 45.4654, lng: 9.1859, color: '#ff453a', emoji: '🕳', label: 'Buca stradale', via: 'Via Torino, 12', urgenza: '4/5', stato: 'Aperta', data: '18 mag 2025' },
+          { lat: 45.4640, lng: 9.1920, color: '#ff9f0a', emoji: '🗑', label: 'Rifiuti abbandonati', via: 'Corso di Porta Romana', urgenza: '3/5', stato: 'In lavorazione', data: '17 mag 2025' },
+          // Navigli
+          { lat: 45.4503, lng: 9.1726, color: '#30d158', emoji: '💡', label: 'Illuminazione guasta', via: 'Alzaia Naviglio Grande, 44', urgenza: '5/5', stato: 'Aperta', data: '19 mag 2025' },
+          { lat: 45.4488, lng: 9.1780, color: '#ff453a', emoji: '🕳', label: 'Buca stradale', via: 'Via Vigevano, 3', urgenza: '3/5', stato: 'Aperta', data: '15 mag 2025' },
+          // Isola / Garibaldi
+          { lat: 45.4823, lng: 9.1868, color: '#bf5af2', emoji: '🔊', label: 'Rumore eccessivo', via: 'Via Borsieri, 22', urgenza: '2/5', stato: 'Aperta', data: '16 mag 2025' },
+          { lat: 45.4801, lng: 9.1920, color: '#ff9f0a', emoji: '🗑', label: 'Rifiuti abbandonati', via: 'Piazza Gae Aulenti', urgenza: '4/5', stato: 'In lavorazione', data: '14 mag 2025' },
+          // Sempione
+          { lat: 45.4712, lng: 9.1620, color: '#0071e3', emoji: '🚧', label: 'Segnaletica mancante', via: 'Corso Sempione, 78', urgenza: '2/5', stato: 'Aperta', data: '13 mag 2025' },
+          { lat: 45.4680, lng: 9.1550, color: '#30d158', emoji: '💡', label: 'Illuminazione guasta', via: 'Viale Certosa, 15', urgenza: '4/5', stato: 'Aperta', data: '12 mag 2025' },
+          // Est / Via Padova
+          { lat: 45.4720, lng: 9.2180, color: '#ff453a', emoji: '🕳', label: 'Buca stradale', via: 'Via Padova, 89', urgenza: '5/5', stato: 'Aperta', data: '19 mag 2025' },
+          { lat: 45.4690, lng: 9.2250, color: '#ff9f0a', emoji: '🗑', label: 'Rifiuti abbandonati', via: 'Via Casoretto, 11', urgenza: '3/5', stato: 'In lavorazione', data: '18 mag 2025' },
+          { lat: 45.4740, lng: 9.2310, color: '#bf5af2', emoji: '🔊', label: 'Rumore eccessivo', via: 'Piazzale Loreto', urgenza: '2/5', stato: 'Aperta', data: '11 mag 2025' },
+          // Porta Venezia
+          { lat: 45.4710, lng: 9.2020, color: '#0071e3', emoji: '🚧', label: 'Segnaletica mancante', via: 'Corso Buenos Aires, 33', urgenza: '3/5', stato: 'Risolta', data: '10 mag 2025' },
+          { lat: 45.4755, lng: 9.1980, color: '#ff453a', emoji: '🕳', label: 'Buca stradale', via: 'Viale Majno, 7', urgenza: '4/5', stato: 'Aperta', data: '17 mag 2025' },
+          // Sud / Porta Romana
+          { lat: 45.4490, lng: 9.2020, color: '#30d158', emoji: '💡', label: 'Illuminazione guasta', via: 'Viale Isonzo, 22', urgenza: '3/5', stato: 'Aperta', data: '16 mag 2025' },
+          { lat: 45.4460, lng: 9.1950, color: '#ff9f0a', emoji: '🗑', label: 'Rifiuti abbandonati', via: 'Via Ripamonti, 5', urgenza: '4/5', stato: 'Aperta', data: '15 mag 2025' },
+          // Bicocca / Nord
+          { lat: 45.5050, lng: 9.2100, color: '#ff453a', emoji: '🕳', label: 'Buca stradale', via: 'Viale Sarca, 110', urgenza: '3/5', stato: 'In lavorazione', data: '14 mag 2025' },
+          { lat: 45.5010, lng: 9.1980, color: '#0071e3', emoji: '🚧', label: 'Segnaletica mancante', via: 'Via Trasimeno, 8', urgenza: '2/5', stato: 'Aperta', data: '13 mag 2025' },
+          // Ovest / Bisceglie
+          { lat: 45.4550, lng: 9.1350, color: '#bf5af2', emoji: '🔊', label: 'Rumore eccessivo', via: 'Via Lorenteggio, 67', urgenza: '3/5', stato: 'Aperta', data: '12 mag 2025' },
+          { lat: 45.4600, lng: 9.1280, color: '#ff453a', emoji: '🕳', label: 'Buca stradale', via: 'Via Giambellino, 14', urgenza: '5/5', stato: 'Aperta', data: '19 mag 2025' },
+          // Citylife
+          { lat: 45.4780, lng: 9.1480, color: '#30d158', emoji: '💡', label: 'Illuminazione guasta', via: 'Piazza Tre Torri', urgenza: '2/5', stato: 'Risolta', data: '9 mag 2025' },
+        ];
+
+        var statoColor = { 'Aperta': '#ff453a', 'In lavorazione': '#ff9f0a', 'Risolta': '#30d158' };
+
+        pins.forEach(function(p) {
+          var popupHtml = `
+            <div style="min-width:200px;">
+              <div style="font-size:14px; font-weight:700; margin-bottom:6px;">${p.emoji} ${p.label}</div>
+              <div style="font-size:12px; color:#555; margin-bottom:10px;">📍 ${p.via}</div>
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
+                <div>
+                  <div style="font-size:11px; color:#86868b; margin-bottom:2px;">Urgenza</div>
+                  <div style="font-size:13px; font-weight:600;">${p.urgenza}</div>
+                </div>
+                <div>
+                  <div style="font-size:11px; color:#86868b; margin-bottom:2px;">Stato</div>
+                  <div style="font-size:12px; font-weight:600; color:${statoColor[p.stato]};">${p.stato}</div>
+                </div>
+                <div>
+                  <div style="font-size:11px; color:#86868b; margin-bottom:2px;">Data</div>
+                  <div style="font-size:12px;">${p.data}</div>
+                </div>
+              </div>
+            </div>`;
+
+          L.marker([p.lat, p.lng], { icon: makeIcon(p.color, p.emoji) })
+            .addTo(map)
+            .bindPopup(popupHtml, { closeButton: false, className: 'urbania-popup', maxWidth: 240 });
+        });
+      });
+    </script>
+    <style>
+      .urbania-popup .leaflet-popup-content-wrapper {
+        border-radius: 14px;
+        box-shadow: 0 12px 32px rgba(0,0,0,0.14);
+        border: 1px solid #e8e8ed;
+        font-family: -apple-system, 'Helvetica Neue', sans-serif;
+      }
+      .urbania-popup .leaflet-popup-content { margin: 14px 18px; }
+      .urbania-popup .leaflet-popup-tip-container { display: none; }
+      .leaflet-attribution-flag { display: none !important; }
+    </style>
   </div>
 
   <div class="scroll-hint">
