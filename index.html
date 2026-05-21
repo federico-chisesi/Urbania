@@ -770,18 +770,183 @@
     background: var(--gray-100);
   }
 
-  /* Responsive */
+  /* ── HAMBURGER MENU ── */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+    z-index: 200;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--gray-700);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .nav-mobile-menu {
+    display: none;
+    position: fixed;
+    top: 52px; left: 0; right: 0;
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--gray-100);
+    z-index: 99;
+    flex-direction: column;
+    padding: 12px 0 20px;
+    animation: fadeDown 0.2s ease;
+  }
+  .nav-mobile-menu.open { display: flex; }
+  .nav-mobile-menu a {
+    display: block;
+    padding: 14px 24px;
+    font-size: 16px;
+    color: var(--gray-700);
+    text-decoration: none;
+    font-weight: 400;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .nav-mobile-menu a:last-of-type { border-bottom: none; }
+  .nav-mobile-cta {
+    margin: 12px 24px 0;
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    border-radius: 980px;
+    padding: 12px 18px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── TABLET (max 1024px) ── */
+  @media (max-width: 1024px) {
+    nav { padding: 0 32px; }
+    .nav-links { gap: 20px; }
+    .index-grid { grid-template-columns: repeat(3, 1fr); }
+    .bento-card.large { grid-column: span 12; }
+    .bento-card.medium { grid-column: span 12; }
+    .pa-inner { gap: 48px; }
+    .bm-pricing-grid { grid-template-columns: repeat(2, 1fr); }
+    .bm-acc-header { grid-template-columns: 1fr 120px 36px; gap: 16px; }
+    .bm-acc-summary { display: none; }
+  }
+
+  /* ── MOBILE (max 768px) ── */
   @media (max-width: 768px) {
-    nav { padding: 0 24px; }
+    /* Nav */
+    nav { padding: 0 20px; }
     .nav-links { display: none; }
-    section { padding: 80px 24px; }
-    .problem-layout,
-    .agg-layout,
-    .pa-inner { grid-template-columns: 1fr; gap: 48px; }
-    .bento-card.large, .bento-card.medium, .bento-card.wide, .bento-card.third {
-      grid-column: span 12;
+    .nav-cta { display: none; }
+    .nav-hamburger { display: flex; }
+
+    /* Sections */
+    section { padding: 72px 20px 60px; }
+
+    /* Hero */
+    .hero-title { letter-spacing: -1.5px; }
+    .hero-sub { font-size: 17px; }
+    .hero-btns { flex-direction: column; align-items: center; gap: 12px; }
+    .btn-primary, .btn-secondary { width: 100%; max-width: 320px; font-size: 16px; padding: 14px 24px; }
+    #urbania-map { height: 320px !important; }
+
+    /* Index */
+    #index { padding: 60px 20px; }
+    .index-grid { grid-template-columns: 1fr 1fr; }
+    .index-item { padding: 22px 16px; }
+    .index-title { font-size: 14px; }
+    .index-desc { display: none; }
+
+    /* Content sections */
+    .content-section { padding: 72px 20px; }
+    .section-title { letter-spacing: -0.8px; }
+    .section-body { font-size: 17px; }
+
+    /* Problem layout */
+    .problem-layout { grid-template-columns: 1fr; gap: 40px; }
+    .stat-cards { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .stat-num { font-size: 32px; }
+
+    /* Bento grid */
+    .bento-section { padding: 72px 20px; }
+    .bento-grid { gap: 12px; margin-top: 40px; }
+    .bento-card.large, .bento-card.medium, .bento-card.wide, .bento-card.third { grid-column: span 12; }
+    .bento-card { padding: 28px 24px; }
+
+    /* Agg layout */
+    .agg-layout { grid-template-columns: 1fr; gap: 40px; }
+
+    /* PA section */
+    .pa-inner { grid-template-columns: 1fr; gap: 40px; padding: 72px 20px; }
+    .dash-row-bar-wrap { width: 60px; }
+
+    /* Obiettivo */
+    .obiettivo-inner { padding: 80px 20px; }
+
+    /* CTA */
+    #cta { padding: 80px 20px; }
+
+    /* Business Model */
+    .bm-pricing-grid { grid-template-columns: 1fr; }
+    .bm-revenue-row, .bm-bench-grid { grid-template-columns: 1fr; }
+    .bm-channels-grid { grid-template-columns: 1fr; }
+    .bm-risk-row { grid-template-columns: 1fr; gap: 10px; }
+    .bm-acc-header {
+      grid-template-columns: 1fr 90px 32px;
+      gap: 12px;
+      padding: 18px 20px;
     }
-    .stat-cards { grid-template-columns: 1fr 1fr; }
+    .bm-acc-summary { display: none; }
+    .bm-acc-price { font-size: 26px; }
+    .bm-acc-body-inner { grid-template-columns: 1fr; padding: 20px; }
+    .bm-modules-grid { grid-template-columns: 1fr; }
+    .bm-mrr-total { flex-direction: column; gap: 12px; text-align: left; }
+
+    /* App sections */
+    .app-section-wrap { grid-template-columns: 1fr; }
+    .app-card.span2 { grid-column: span 1; }
+    .app-card.span2 > div[style*="grid-template-columns"] {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 28px !important;
+    }
+    .app-statement { flex-direction: column; gap: 20px; padding: 32px 24px; grid-column: span 1; }
+    .app-statement-title { font-size: 22px; }
+
+    /* Timeline */
+    .bm-timeline { padding-left: 24px; }
+
+    /* Hero visual */
+    .hero-visual { margin-top: 48px; }
+    .map-mock { height: 280px; }
+  }
+
+  /* ── SMALL MOBILE (max 480px) ── */
+  @media (max-width: 480px) {
+    .index-grid { grid-template-columns: 1fr; }
+    .index-item { padding: 18px 16px; }
+    .index-desc { display: block; font-size: 12px; }
+    .stat-cards { grid-template-columns: 1fr; }
+    .bm-pricing-grid { grid-template-columns: 1fr; }
+    .hero-btns { width: 100%; }
+    .btn-primary, .btn-secondary { max-width: 100%; }
+    .dash-row-bar-wrap { display: none; }
   }
 </style>
 </head>
@@ -799,7 +964,21 @@
     <li><a href="#pa">PA</a></li>
   </ul>
   <button class="nav-cta" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Scopri di più</button>
+  <button class="nav-hamburger" id="hamburger" aria-label="Apri menu" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="nav-mobile-menu" id="mobileMenu">
+  <a href="#problema" onclick="closeMenu()">Il Problema</a>
+  <a href="#funzionamento" onclick="closeMenu()">Come Funziona</a>
+  <a href="#business-model" onclick="closeMenu()">Business Model</a>
+  <a href="#scelta-cloud" onclick="closeMenu()">Scelta del Cloud</a>
+  <a href="#workflow" onclick="closeMenu()">Work Flow</a>
+  <a href="#pa" onclick="closeMenu()">PA</a>
+  <button class="nav-mobile-cta" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'}); closeMenu()">Scopri di più</button>
+</div>
 
 <!-- HERO -->
 <section id="hero">
@@ -1583,7 +1762,7 @@
   .bm-compare-fill { height: 100%; border-radius: 4px; transition: width 1s ease; }
 
   @media (max-width: 768px) {
-    .bm-pricing-grid { grid-template-columns: 1fr 1fr; }
+    .bm-pricing-grid { grid-template-columns: 1fr; }
     .bm-revenue-row, .bm-bench-grid { grid-template-columns: 1fr; }
     .bm-channels-grid { grid-template-columns: 1fr; }
     .bm-risk-row { grid-template-columns: 1fr; }
@@ -2282,6 +2461,26 @@
 </section>
 
 <script>
+  // Hamburger menu
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const btn = document.getElementById('hamburger');
+    menu.classList.toggle('open');
+    btn.classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+  }
+  // Close menu on outside click
+  document.addEventListener('click', function(e) {
+    const menu = document.getElementById('mobileMenu');
+    const btn = document.getElementById('hamburger');
+    if (menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) {
+      closeMenu();
+    }
+  });
+
   // Intersection observer for reveal animations
   const reveals = document.querySelectorAll('.reveal');
   const obs = new IntersectionObserver((entries) => {
