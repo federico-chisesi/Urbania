@@ -70,18 +70,18 @@
   .nav-links a:hover { opacity: 1; }
 
   .nav-cta {
-    background: var(--blue);
-    color: #fff;
-    border: none;
+    background: transparent;
+    color: var(--blue);
+    border: 1.5px solid var(--blue);
     border-radius: 980px;
     padding: 8px 18px;
     font-size: 13px;
     font-weight: 500;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: all 0.2s;
   }
 
-  .nav-cta:hover { background: #0077ed; }
+  .nav-cta:hover { background: var(--blue-light); }
 
   /* SECTIONS */
   section {
@@ -997,8 +997,8 @@
 
   /* ── ACCESSO DASHBOARD + DASHBOARD PREMIUM ── */
   .nav-dashboard-btn {
-    background: transparent;
-    color: var(--blue);
+    background: var(--blue);
+    color: #fff;
     border: 1.5px solid var(--blue);
     border-radius: 980px;
     padding: 8px 18px;
@@ -1009,7 +1009,7 @@
     margin-left: 10px;
     white-space: nowrap;
   }
-  .nav-dashboard-btn:hover { background: var(--blue-light); }
+  .nav-dashboard-btn:hover { background: #0077ed; }
   .nav-actions { display:flex; align-items:center; gap:10px; }
   .nav-mobile-dashboard {
     margin: 8px 24px 0;
