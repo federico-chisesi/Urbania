@@ -95,6 +95,10 @@
   }
 
   .nav-logo {
+    text-decoration: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-family: Helvetica, Arial, sans-serif;
     font-size: 18px;
     font-weight: 600;
     letter-spacing: -0.5px;
@@ -1226,7 +1230,7 @@
 
 <!-- NAVIGATION -->
 <nav>
-  <div class="nav-logo">Urbania</div>
+  <a class="nav-logo" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;">URBAN<span style="text-transform:lowercase; font-weight:600; font-family:Helvetica,Arial,sans-serif;">i</span>A</a>
   <ul class="nav-links">
     <li><a href="#problema">Il Problema</a></li>
     <li><a href="#funzionamento">Come Funziona</a></li>
