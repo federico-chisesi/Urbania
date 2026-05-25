@@ -4,7 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Urbania — La città che parla</title>
-<link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* SF Pro via Apple system stack */
+  @font-face {
+    font-family: 'SF Pro Display';
+    src: local('-apple-system'), local('SF Pro Display'), local('SFProDisplay-Regular');
+  }
+  @font-face {
+    font-family: 'SF Pro Text';
+    src: local('-apple-system'), local('SF Pro Text'), local('SFProText-Regular');
+  }
+</style>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -23,8 +33,46 @@
 
   html { scroll-behavior: smooth; overflow-x: hidden; }
 
+  /* ── GERARCHIA TIPOGRAFICA SF PRO ── */
+  h1, .hero-title, .section-title-xl {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
+
+  h2, .section-title, .card-title-lg {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  h3, .subsection-title, .card-title {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+  }
+
+  p, li, span, .body-text {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    letter-spacing: -0.005em;
+    line-height: 1.6;
+  }
+
+  .eyebrow, .label-sm, .nav-links a, .tag {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+
   body {
-    font-family: -apple-system, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
     background: #fff;
     color: var(--gray-700);
     overflow-x: hidden;
@@ -127,7 +175,6 @@
     font-size: 21px;
     font-weight: 300;
     color: var(--gray-400);
-    max-width: 580px;
     line-height: 1.5;
     margin: 0 auto 48px;
     animation: fadeUp 0.9s ease 0.5s both;
@@ -353,7 +400,6 @@
     font-weight: 300;
     color: #333;
     line-height: 1.65;
-    max-width: 680px;
   }
 
   /* PROBLEM SECTION */
@@ -662,7 +708,6 @@
   }
 
   .obiettivo-inner {
-    max-width: 800px;
     margin: 0 auto;
     padding: 140px 48px;
   }
@@ -1048,7 +1093,7 @@
   .login-left { background:#000; color:#fff; padding:48px; display:flex; flex-direction:column; justify-content:space-between; min-height:520px; }
   .login-left .section-eyebrow { color:#6eb3f7; }
   .login-left h2 { font-size:52px; line-height:.98; letter-spacing:-1.8px; margin:18px 0; }
-  .login-left p { color:#a1a1a6; font-size:17px; line-height:1.6; max-width:420px; }
+  .login-left p { color:#a1a1a6; font-size:17px; line-height:1.6; }
   .login-demo { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); border-radius:20px; padding:18px; margin-top:28px; font-size:13px; line-height:1.8; color:#d8d8dd; }
   .login-demo strong { color:#fff; }
   .login-right { padding:48px; }
@@ -1070,7 +1115,7 @@
   .pa-dashboard-section { max-width:1180px; margin:0 auto; padding:96px 28px; }
   .pa-hero-grid { display:grid; grid-template-columns:.9fr 1.1fr; gap:56px; align-items:center; }
   .pa-hero-title { font-size:clamp(52px,7vw,88px); font-weight:700; letter-spacing:-3px; line-height:.95; margin:18px 0 26px; }
-  .pa-hero-lead { font-size:20px; color:var(--gray-400); line-height:1.55; max-width:580px; font-weight:300; }
+  .pa-hero-lead { font-size:20px; color:var(--gray-400); line-height:1.55; font-weight:300; }
   .pa-hero-actions { display:flex; gap:14px; margin-top:34px; flex-wrap:wrap; }
   .pa-preview-card, .pa-dashboard-shell, .pa-card { background:var(--gray-50); border:1px solid var(--gray-100); border-radius:28px; box-shadow:0 22px 62px rgba(0,0,0,.08); }
   .pa-preview-card { padding:24px; }
@@ -1214,8 +1259,8 @@
 <!-- HERO -->
 <section id="hero">
   <div class="hero-eyebrow">Intelligenza civica</div>
-  <h1 class="hero-title">La città<br>che <span>parla</span>.</h1>
-  <p class="hero-sub">Urbania trasforma ogni segnalazione urbana in dato strutturato. Visibile. Misurabile. Risolvibile.</p>
+  <h1 class="hero-title">La città<br>che <span><strong>parla</strong></span></h1>
+  <p class="hero-sub">Urbania trasforma ogni segnalazione urbana in dato strutturato.<br>Visibile, Misurabile, Risolvibile</p>
   <div class="hero-btns">
     <button class="btn-primary" onclick="document.getElementById('problema').scrollIntoView({behavior:'smooth'})">Scopri il progetto</button>
     <button class="btn-secondary" onclick="document.getElementById('index').scrollIntoView({behavior:'smooth'})">Vedi l'indice</button>
@@ -1513,7 +1558,7 @@
     line-height: 1.15; margin-bottom: 14px;
   }
   .app-card-body {
-    font-size: 15px; color: #555; line-height: 1.7; max-width: 560px;
+    font-size: 15px; color: #555; line-height: 1.7;
   }
   .app-icon-wrap {
     width: 52px; height: 52px; border-radius: 14px;
@@ -1623,7 +1668,7 @@
   }
   .app-statement-icon { font-size: 48px; flex-shrink: 0; }
   .app-statement-title { font-size: 28px; font-weight: 700; letter-spacing: -0.8px; line-height: 1.2; margin-bottom: 12px; }
-  .app-statement-body { font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.65; max-width: 580px; }
+  .app-statement-body { font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.65; }
 
   @media (max-width: 768px) {
     .app-section-wrap { grid-template-columns: 1fr; }
@@ -1635,7 +1680,7 @@
 <section id="funzionamento" style="background:var(--gray-50); min-height:auto; padding:0;">
   <div class="bento-section reveal">
     <p class="section-eyebrow">02 — Come funziona</p>
-    <h2 class="section-title" style="max-width:640px;">Semplice per il cittadino.<br>Potente per la città.</h2>
+    <h2 class="section-title">Semplice per il cittadino.<br>Potente per la città.</h2>
     <p class="section-body">Urbania non è un social network. È uno strumento di intelligenza civica — orientato alla raccolta, organizzazione e valorizzazione dei dati urbani. Si articola in cinque sezioni principali.</p>
 
     <div class="app-section-wrap">
@@ -2009,8 +2054,8 @@
     <!-- ── 1. BENCHMARKING & ADVANCED ANALYTICS ── -->
     <div style="margin-top: 96px;">
       <p class="bm-revenue-label">Benchmarking & Advanced Analytics</p>
-      <h3 style="font-size:32px; font-weight:700; letter-spacing:-1px; line-height:1.15; margin-bottom:20px; max-width:560px;">Anche i comuni più piccoli generano dati preziosi.</h3>
-      <p class="section-body" style="max-width:640px;">I comuni sotto i 5.000 abitanti accedono gratuitamente alla piattaforma. Non è una concessione: è una scelta strategica. Ogni comune free contribuisce al dataset aggregato, rendendo l'analisi comparativa più accurata e il modello predittivo più potente per tutti gli altri. Il benchmarking inter-comunale — disponibile dal 2027 — permetterà a ogni amministrazione di misurare la propria efficienza rispetto a realtà analoghe per dimensione, regione e tipologia di territorio. Un incentivo concreto all'adozione: nessun comune vorrà restare fuori dalla classifica quando tutti i suoi vicini ci sono già.</p>
+      <h3 style="font-size:32px; font-weight:700; letter-spacing:-1px; line-height:1.15; margin-bottom:20px;">Anche i comuni più piccoli generano dati preziosi.</h3>
+      <p class="section-body">I comuni sotto i 5.000 abitanti accedono gratuitamente alla piattaforma. Non è una concessione: è una scelta strategica. Ogni comune free contribuisce al dataset aggregato, rendendo l'analisi comparativa più accurata e il modello predittivo più potente per tutti gli altri. Il benchmarking inter-comunale — disponibile dal 2027 — permetterà a ogni amministrazione di misurare la propria efficienza rispetto a realtà analoghe per dimensione, regione e tipologia di territorio. Un incentivo concreto all'adozione: nessun comune vorrà restare fuori dalla classifica quando tutti i suoi vicini ci sono già.</p>
       <div class="bm-bench-grid">
         <div>
           <div class="bm-bench-card" style="margin-bottom:16px;">
@@ -2055,8 +2100,8 @@
     <!-- ── 2. STRUTTURA E LOGICA DEI RICAVI ── -->
     <div style="margin-top: 96px;">
       <p class="bm-revenue-label">Struttura e logica dei ricavi</p>
-      <h3 style="font-size:32px; font-weight:700; letter-spacing:-1px; line-height:1.15; margin-bottom:20px; max-width:560px;">Quattro piani. Un principio: il valore cresce con la dimensione.</h3>
-      <p class="section-body" style="max-width:640px; margin-bottom:0;">Il prezzo scala con la complessità del comune. Ogni piano include esattamente ciò che serve a quella fascia — niente di meno, niente che non verrà usato.</p>
+      <h3 style="font-size:32px; font-weight:700; letter-spacing:-1px; line-height:1.15; margin-bottom:20px;">Quattro piani. Un principio: il valore cresce con la dimensione.</h3>
+      <p class="section-body" style="margin-bottom:0;">Il prezzo scala con la complessità del comune. Ogni piano include esattamente ciò che serve a quella fascia — niente di meno, niente che non verrà usato.</p>
 
       <style>
         /* ── Accordion piani ── */
@@ -2435,8 +2480,8 @@
     <!-- ── 3. CANALI E TOUCHPOINT ── -->
     <div style="margin-top: 96px;">
       <p class="bm-revenue-label">Canali e touchpoint B2G</p>
-      <h3 style="font-size:32px; font-weight:700; letter-spacing:-1px; line-height:1.15; margin-bottom:20px; max-width:560px;">Vendere alla PA richiede credibilità prima dei contratti.</h3>
-      <p class="section-body" style="max-width:640px;">I comuni decidono lentamente, vogliono referenze e si fidano di chi conoscono. La strategia di acquisizione di Urbania è costruita su questa realtà — non per aggirarla, ma per lavorarci a favore.</p>
+      <h3 style="font-size:32px; font-weight:700; letter-spacing:-1px; line-height:1.15; margin-bottom:20px;">Vendere alla PA richiede credibilità prima dei contratti.</h3>
+      <p class="section-body">I comuni decidono lentamente, vogliono referenze e si fidano di chi conoscono. La strategia di acquisizione di Urbania è costruita su questa realtà — non per aggirarla, ma per lavorarci a favore.</p>
       <div class="bm-channels-grid">
         <div class="bm-channel-card">
           <div class="bm-channel-icon">🤝</div>
@@ -2480,8 +2525,8 @@
     <!-- ── 4. VISIONE ECONOMICA ANNO PER ANNO ── -->
     <div style="margin-top: 96px;">
       <p class="bm-revenue-label">Visione economica anno per anno</p>
-      <h3 style="font-size:32px; font-weight:700; letter-spacing:-1px; line-height:1.15; margin-bottom:20px; max-width:560px;">Ogni fase costruisce le fondamenta di quella successiva.</h3>
-      <p class="section-body" style="max-width:640px; margin-bottom:0;">Non è una lista di speranze: è una sequenza logica in cui credibilità, espansione e scala si alimentano a vicenda. Al secondo anno operativo, lo scenario conservativo stima un MRR di circa €41.000 e un ARR prossimo ai €500.000.</p>
+      <h3 style="font-size:32px; font-weight:700; letter-spacing:-1px; line-height:1.15; margin-bottom:20px;">Ogni fase costruisce le fondamenta di quella successiva.</h3>
+      <p class="section-body" style="margin-bottom:0;">Non è una lista di speranze: è una sequenza logica in cui credibilità, espansione e scala si alimentano a vicenda. Al secondo anno operativo, lo scenario conservativo stima un MRR di circa €41.000 e un ARR prossimo ai €500.000.</p>
 
       <div class="bm-revenue-row" style="margin-top:48px; align-items:start;">
         <div class="bm-timeline">
@@ -2553,8 +2598,8 @@
     <!-- ── 5. VALUTAZIONE DEI RISCHI ── -->
     <div style="margin-top: 96px;">
       <p class="bm-revenue-label">Valutazione dei rischi</p>
-      <h3 style="font-size:32px; font-weight:700; letter-spacing:-1px; line-height:1.15; margin-bottom:20px; max-width:560px;">Ogni rischio ha una risposta. Non una speranza.</h3>
-      <p class="section-body" style="max-width:640px;">Il mercato B2G ha frizioni specifiche. Le abbiamo mappate e abbiamo costruito mitigazioni concrete per ciascuna — non generiche, ma integrate nella struttura stessa del prodotto e del modello commerciale.</p>
+      <h3 style="font-size:32px; font-weight:700; letter-spacing:-1px; line-height:1.15; margin-bottom:20px;">Ogni rischio ha una risposta. Non una speranza.</h3>
+      <p class="section-body">Il mercato B2G ha frizioni specifiche. Le abbiamo mappate e abbiamo costruito mitigazioni concrete per ciascuna — non generiche, ma integrate nella struttura stessa del prodotto e del modello commerciale.</p>
       <div class="bm-risk-list">
         <div class="bm-risk-row">
           <div class="bm-risk-name">Adozione cittadini insufficiente</div>
