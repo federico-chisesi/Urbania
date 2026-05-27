@@ -2064,7 +2064,7 @@
         <div>
           <div class="bm-bench-card" style="margin-bottom:16px;">
             <div class="bm-bench-stat">
-              <div class="bm-bench-big">5.500</div>
+              <div class="bm-bench-big">7.100</div>
             </div>
             <div class="bm-bench-desc">comuni sotto i 5.000 abitanti in Italia — tutti potenziali nodi gratuiti del dataset</div>
           </div>
@@ -2658,9 +2658,42 @@
   <div class="content-section reveal">
     <p class="section-eyebrow">04 — Scelta del Cloud</p>
     <h2 class="section-title">Infrastruttura pensata<br>per crescere.</h2>
-    <p class="section-body">La scelta del cloud permette a Urbania di nascere come piattaforma leggera, modulare e scalabile. In una prima fase è possibile costruire un MVP con pochi servizi essenziali, senza gestire server fisici e senza sostenere grandi investimenti iniziali. Se il progetto dimostra valore, l'architettura può crescere progressivamente, aggiungendo nuovi moduli per analisi dati, reportistica, dashboard amministrative e funzionalità AI.</p>
+    <!-- Cloud pros/cons table -->
+    <div style="width:100%;margin-bottom:48px;border-radius:16px;overflow:hidden;border:1px solid var(--gray-100);">
+      <table style="width:100%;border-collapse:collapse;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',sans-serif;">
+        <tbody>
+          <tr>
+            <td style="width:36%;padding:28px 32px;background:#fff;border-bottom:1px solid var(--gray-100);vertical-align:middle;"><strong style="color:#30d158;font-size:17px;font-weight:600;letter-spacing:-0.3px;">Scalabilità</strong></td>
+            <td style="padding:28px 32px;background:#fff;border-bottom:1px solid var(--gray-100);font-size:16px;color:var(--gray-700);line-height:1.55;vertical-align:middle;">Possibilità di partire con pochi utenti e segnalazioni senza acquistare server fisici, e di aumentare risorse quando necessario</td>
+          </tr>
+          <tr>
+            <td style="padding:28px 32px;background:#fff;border-bottom:1px solid var(--gray-100);vertical-align:middle;"><strong style="color:#30d158;font-size:17px;font-weight:600;letter-spacing:-0.3px;">Modularità</strong></td>
+            <td style="padding:28px 32px;background:#fff;border-bottom:1px solid var(--gray-100);font-size:16px;color:var(--gray-700);line-height:1.55;vertical-align:middle;">Ogni componente può essere sviluppata e potenziata separatamente</td>
+          </tr>
+          <tr>
+            <td style="padding:28px 32px;background:#fff;border-bottom:1px solid var(--gray-100);vertical-align:middle;"><strong style="color:#30d158;font-size:17px;font-weight:600;letter-spacing:-0.3px;">Supporto per AI</strong></td>
+            <td style="padding:28px 32px;background:#fff;border-bottom:1px solid var(--gray-100);font-size:16px;color:var(--gray-700);line-height:1.55;vertical-align:middle;">Cloud offre potenza di calcolo, servizi specializzati e strumenti AI on-demand senza doverli costruire internamente</td>
+          </tr>
+          <tr>
+            <td style="padding:28px 32px;background:#fff;border-bottom:1px solid var(--gray-100);vertical-align:middle;"><strong style="color:#ff453a;font-size:17px;font-weight:600;letter-spacing:-0.3px;">Dipendenza dal provider</strong></td>
+            <td style="padding:28px 32px;background:#fff;border-bottom:1px solid var(--gray-100);font-size:16px;color:var(--gray-700);line-height:1.55;vertical-align:middle;">Se l'architettura non viene progettata con attenzione potrebbe essere più complesso migrare verso altri provider</td>
+          </tr>
+          <tr>
+            <td style="padding:28px 32px;background:#fff;border-bottom:1px solid var(--gray-100);vertical-align:middle;"><strong style="color:#ff453a;font-size:17px;font-weight:600;letter-spacing:-0.3px;">Controllo dei costi</strong></td>
+            <td style="padding:28px 32px;background:#fff;border-bottom:1px solid var(--gray-100);font-size:16px;color:var(--gray-700);line-height:1.55;vertical-align:middle;">Il pay-per-use è conveniente all'inizio ma con la scalabilità rischia di diventare oneroso</td>
+          </tr>
+          <tr>
+            <td style="padding:28px 32px;background:#fff;vertical-align:middle;"><strong style="color:#ff453a;font-size:17px;font-weight:600;letter-spacing:-0.3px;">Sicurezza e privacy</strong></td>
+            <td style="padding:28px 32px;background:#fff;font-size:16px;color:var(--gray-700);line-height:1.55;vertical-align:middle;">Serve una gestione responsabile dei dati in quanto si trattano dati geolocalizzati, informazioni potenzialmente sensibili</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="section-body">Urbania viene progettata inizialmente su AWS come infrastruttura cloud scalabile e qualificabile per la PA. Questa scelta consente di partire rapidamente, collegando alla piattaforma una serie di servizi già coerenti con i moduli previsti: hosting dell'app, gestione delle API, database, storage delle immagini, analytics, AI e reportistica. In questa fase, il cloud permette di ridurre l'investimento iniziale e di validare progressivamente il progetto, mantenendo l'architettura pronta a crescere insieme al numero di Comuni aderenti e al volume delle segnalazioni.</p>
     <br>
-    <p class="section-body">Allo stesso tempo, il cloud richiede attenzione. L'uso di servizi esterni comporta dipendenza dal provider, controllo continuo dei costi e una gestione rigorosa della sicurezza. Poiché Urbania tratta dati geolocalizzati e potenzialmente sensibili, l'architettura deve prevedere fin dall'inizio privacy, pseudonimizzazione, controllo degli accessi e protezione delle API.</p>
+    <p class="section-body">Per l'accesso al mercato pubblico, il progetto prevede inoltre una possibile partnership con un operatore verticale come Maggioli, che conosce i processi amministrativi, i canali commerciali e le esigenze operative dei Comuni. In questo modo la solidità tecnologica del cloud può essere affiancata da una maggiore capacità di adattamento al contesto reale della pubblica amministrazione.</p>
+    <br>
+    <p class="section-body">Nel medio periodo, Urbania può valutare un'evoluzione verso un'infrastruttura proprietaria, così da controllare meglio costi e governance dei dati.</p>
   </div>
 </section>
 
