@@ -1914,13 +1914,73 @@
             <span style="font-size:13px; font-weight:600;">Segnalazioni risolte — ultimi 6 mesi</span>
             <span style="font-size:12px; color:var(--green); font-weight:600;">↑ +34%</span>
           </div>
-          <div class="report-chart">
-            <div class="report-bar-col"><div class="report-bar" style="height:40%; background:var(--gray-100);"></div><div class="report-bar-label">Nov</div></div>
-            <div class="report-bar-col"><div class="report-bar" style="height:52%; background:var(--gray-100);"></div><div class="report-bar-label">Dic</div></div>
-            <div class="report-bar-col"><div class="report-bar" style="height:45%; background:var(--gray-100);"></div><div class="report-bar-label">Gen</div></div>
-            <div class="report-bar-col"><div class="report-bar" style="height:65%; background:var(--blue-light);"></div><div class="report-bar-label">Feb</div></div>
-            <div class="report-bar-col"><div class="report-bar" style="height:78%; background:var(--blue-light);"></div><div class="report-bar-label">Mar</div></div>
-            <div class="report-bar-col"><div class="report-bar" style="height:92%; background:var(--blue);"></div><div class="report-bar-label">Apr</div></div>
+          <!-- Chart a linee SVG -->
+          <div style="margin-top:8px; position:relative; height:120px; width:100%;">
+            <svg viewBox="0 0 300 100" preserveAspectRatio="none" style="width:100%;height:100%;display:block;">
+              <!-- Griglia sfondo -->
+              <line x1="0" y1="20" x2="300" y2="20" stroke="#f0f0f2" stroke-width="1"/>
+              <line x1="0" y1="40" x2="300" y2="40" stroke="#f0f0f2" stroke-width="1"/>
+              <line x1="0" y1="60" x2="300" y2="60" stroke="#f0f0f2" stroke-width="1"/>
+              <line x1="0" y1="80" x2="300" y2="80" stroke="#f0f0f2" stroke-width="1"/>
+
+              <!-- Linea ARANCIO — Segnalazioni aperte (decrescente) -->
+              <polyline
+                points="0,72 60,65 120,70 180,55 240,42 300,28"
+                fill="none" stroke="#ff9f0a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- Area fill arancio -->
+              <polygon
+                points="0,72 60,65 120,70 180,55 240,42 300,28 300,100 0,100"
+                fill="rgba(255,159,10,0.08)"/>
+
+              <!-- Linea BLU — Segnalazioni risolte (crescente) -->
+              <polyline
+                points="0,78 60,68 120,72 180,52 240,35 300,12"
+                fill="none" stroke="#0071e3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- Area fill blu -->
+              <polygon
+                points="0,78 60,68 120,72 180,52 240,35 300,12 300,100 0,100"
+                fill="rgba(0,113,227,0.07)"/>
+
+              <!-- Linea VERDE — Segnalazioni validate (crescente forte) -->
+              <polyline
+                points="0,88 60,80 120,75 180,60 240,40 300,18"
+                fill="none" stroke="#30d158" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- Area fill verde -->
+              <polygon
+                points="0,88 60,80 120,75 180,60 240,40 300,18 300,100 0,100"
+                fill="rgba(48,209,88,0.07)"/>
+
+              <!-- Dots finali -->
+              <circle cx="300" cy="28" r="3.5" fill="#ff9f0a"/>
+              <circle cx="300" cy="12" r="3.5" fill="#0071e3"/>
+              <circle cx="300" cy="18" r="3.5" fill="#30d158"/>
+            </svg>
+
+            <!-- Etichette mesi -->
+            <div style="display:flex; justify-content:space-between; margin-top:6px; padding:0 2px;">
+              <span style="font-size:10px;color:var(--gray-400);">Nov</span>
+              <span style="font-size:10px;color:var(--gray-400);">Dic</span>
+              <span style="font-size:10px;color:var(--gray-400);">Gen</span>
+              <span style="font-size:10px;color:var(--gray-400);">Feb</span>
+              <span style="font-size:10px;color:var(--gray-400);">Mar</span>
+              <span style="font-size:10px;color:var(--gray-400);">Apr</span>
+            </div>
+
+            <!-- Legenda -->
+            <div style="display:flex; gap:14px; margin-top:12px; flex-wrap:wrap;">
+              <div style="display:flex;align-items:center;gap:5px;">
+                <div style="width:18px;height:2.5px;background:#0071e3;border-radius:2px;"></div>
+                <span style="font-size:10px;color:var(--gray-400);">Risolte</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:5px;">
+                <div style="width:18px;height:2.5px;background:#30d158;border-radius:2px;"></div>
+                <span style="font-size:10px;color:var(--gray-400);">Validate</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:5px;">
+                <div style="width:18px;height:2.5px;background:#ff9f0a;border-radius:2px;"></div>
+                <span style="font-size:10px;color:var(--gray-400);">Aperte</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -2410,21 +2470,21 @@
         /* ── Moduli accordion ── */
         .bm-modules-acc {
           margin-top: 24px;
-          border: 1px solid var(--gray-100);
+          border: 1.5px solid #28c840;
           border-radius: 18px;
           overflow: hidden;
         }
         .bm-modules-header {
           display: flex; justify-content: space-between; align-items: center;
           padding: 22px 28px;
-          background: var(--gray-50);
+          background: #e8f9ec;
           cursor: pointer;
           user-select: none;
           transition: background 0.2s;
         }
-        .bm-modules-header:hover { background: #ececf0; }
-        .bm-modules-title { font-size: 15px; font-weight: 600; color: var(--gray-700); }
-        .bm-modules-sub { font-size: 13px; color: var(--gray-400); margin-top: 2px; }
+        .bm-modules-header:hover { background: #d4f5dc; }
+        .bm-modules-title { font-size: 15px; font-weight: 600; color: #1a7a2e; }
+        .bm-modules-sub { font-size: 13px; color: #4caf6e; margin-top: 2px; }
         .bm-modules-body {
           max-height: 0; overflow: hidden;
           transition: max-height 0.4s ease;
@@ -2624,7 +2684,7 @@
             <div class="bm-modules-title">Moduli aggiuntivi acquistabili separatamente</div>
             <div class="bm-modules-sub">Espandi le funzionalità del tuo piano con moduli opzionali</div>
           </div>
-          <div class="bm-acc-chevron"><svg width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1L6 6L11 1" stroke="#86868b" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <div class="bm-acc-chevron"><svg width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1L6 6L11 1" stroke="#28c840" stroke-width="1.8" stroke-linecap="round"/></svg></div>
         </div>
         <div class="bm-modules-body">
           <div class="bm-modules-grid">
@@ -2768,8 +2828,31 @@
               <div class="bm-mrr-total-val">~€683.000</div>
             </div>
           </div>
-          <div style="margin-top:20px; padding:16px 18px; background:var(--blue-light); border-radius:12px; font-size:13px; color:var(--blue); line-height:1.5;">
-            <strong>Break-even operativo</strong> raggiungibile con ~30–35 comuni paganti. Costi fissi mensili stimati: €20.000–€25.000 (team + infra + marketing).
+          <!-- BREAK-EVEN TABLE — identico ai ricavi -->
+          <div class="bm-mrr-block" style="margin-top:20px;">
+            <div style="font-size:15px; font-weight:600; margin-bottom:20px;">Break-even operativo</div>
+            <div class="bm-mrr-row">
+              <div class="bm-mrr-label">Comuni paganti necessari</div>
+              <div class="bm-mrr-val" style="font-size:17px; font-weight:700; color:var(--gray-700);">~30–35</div>
+            </div>
+            <div class="bm-mrr-row">
+              <div class="bm-mrr-label">Team</div>
+              <div class="bm-mrr-val" style="font-size:17px; font-weight:700; color:var(--gray-700);">€12.000–€15.000 / mese</div>
+            </div>
+            <div class="bm-mrr-row">
+              <div class="bm-mrr-label">Infrastruttura</div>
+              <div class="bm-mrr-val" style="font-size:17px; font-weight:700; color:var(--gray-700);">€3.000–€5.000 / mese</div>
+            </div>
+            <div class="bm-mrr-row">
+              <div class="bm-mrr-label">Marketing</div>
+              <div class="bm-mrr-val" style="font-size:17px; font-weight:700; color:var(--gray-700);">€5.000 / mese</div>
+            </div>
+            <div class="bm-mrr-total">
+              <div>
+                <div class="bm-mrr-total-label">Costi fissi mensili totali</div>
+                <div class="bm-mrr-total-val">€20.000–€25.000</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
